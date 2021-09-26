@@ -25,6 +25,8 @@ router.delete("/:id", verify, async (req, res) => {
   }
 });
 
+export default router;
+
 //ADD SONG TO LIST
 
 //DELETE SONG FROM LIST BY SONG ID
