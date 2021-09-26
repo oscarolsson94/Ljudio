@@ -27,4 +27,6 @@ router.delete("/:id", verify, async (req, res) => {
 
 //ADD SONG TO LIST
 
-//GET LIST BY USERNAME
+//DELETE SONG FROM LIST BY SONG ID
+
+//GET LISTS BY USERNAME
