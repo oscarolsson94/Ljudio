@@ -24,3 +24,7 @@ router.delete("/:id", verify, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//ADD SONG TO LIST
+
+//GET LIST BY USERNAME
