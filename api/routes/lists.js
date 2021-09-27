@@ -28,20 +28,31 @@ router.delete("/:id", verify, async (req, res) => {
 //ADD SONG TO LIST id = listTitle - send body{songURL}
 router.patch("/addto/:id", verify, async (req, res) => {
   try {
-    await List.updateOne({title: req.params.id}, {
-      content = [...content, songURL]
-    });
+    await List.updateOne(
+      { title: req.params.id },
+      {
+        content: [...content, songURL],
+      }
+    );
     res.status(201).json("The song has been added to the list");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
+//REMOVE SONG FROM LIST id = listTitle - send body{songURL}
+router.patch("/removefrom/:id", verify, async (req, res) => {
+  try {
+    await List.updateOne(
+      { title: req.params.id },
+      {
+        content: content.filter((song) => song !== songURL),
+      }
+    );
+    res.status(204).json("The song has been removed from the list");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 export default router;
-
-//ADD SONG TO LIST
-
-//DELETE SONG FROM LIST BY SONG ID
-
-//GET LISTS BY USERNAME
