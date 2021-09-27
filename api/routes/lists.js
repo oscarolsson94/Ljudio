@@ -19,11 +19,24 @@ router.post("/", verify, async (req, res) => {
 router.delete("/:id", verify, async (req, res) => {
   try {
     await List.findByIdAndDelete(req.params.id);
-    res.status(201).json("The list has been delete...");
+    res.status(204).json("The list has been deleted...");
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+//ADD SONG TO LIST id = listTitle - send body{songURL}
+router.patch("/addto/:id", verify, async (req, res) => {
+  try {
+    await List.updateOne({title: req.params.id}, {
+      content = [...content, songURL]
+    });
+    res.status(201).json("The song has been added to the list");
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 export default router;
 
