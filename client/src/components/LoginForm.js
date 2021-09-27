@@ -1,14 +1,15 @@
 import React from 'react'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import Axios from "axios";
-import "../styling/LoginFormStyle.css"
+import "../styling/FormStyle.css"
 
 function LoginForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const confirmLogin = () => {
+    const login = () => {
         Axios.post("http://localhost:3001/api/auth/login", {
             email: email,
             password: password
@@ -19,7 +20,7 @@ function LoginForm() {
     }
     
     return (
-      <form className="loginForm" onSubmit={confirmLogin}>
+      <form className="form">
           <p>Email</p>
           <input type="email" required onChange={(e) => setEmail(e.target.value)}></input>
 
@@ -28,7 +29,9 @@ function LoginForm() {
           
           <hr/>
 
-          <button type="submit">Log in</button>
+          <button type="submit" onClick={login}>Log in</button>
+
+          <Link to="/register"><p>Not registered? Click here.</p></Link>
       </form>    
    );
 }

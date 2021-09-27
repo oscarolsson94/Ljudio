@@ -32,7 +32,7 @@ function RegisterForm() {
           
                 <hr/>
 
-                <button type="submit" onClick={createAccount}>Log in</button>
+                <button type="submit" onClick={createAccount}>Register</button>
             </form>  
         </div>
     )
