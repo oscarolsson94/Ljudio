@@ -1,4 +1,4 @@
-.loginForm{
+.form{
     height: 380px;
     width: fit-content;
     display: flex;
@@ -12,7 +12,7 @@
     padding: 15px;
 }
 
-.loginForm input{
+.form input{
     background-color: lightgray;
     height: 28px;
     width: 250px;
@@ -20,7 +20,7 @@
     border-radius: 4px;
 }
 
-.loginForm hr{
+.form hr{
   margin-top: 25px;
   height: 2px;
   width: 210px;
@@ -29,7 +29,7 @@
   border: none;
 }
 
-.loginForm button{
+.form button{
     background-color: #9DA7FF;
     margin: 15px;
     border-radius: 4px;
@@ -38,10 +38,10 @@
     height: 40px
 }
 
-.loginForm button:hover{
+.form button:hover{
     background-color: #c1c7ff;
 }
 
-.loginForm button:active{
+.form button:active{
     background-color: #8592ff;
 }
