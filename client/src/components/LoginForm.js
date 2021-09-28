@@ -1,5 +1,6 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../AuthContext';
 import { Link } from 'react-router-dom';
 import Axios from "axios";
 import "../styling/FormStyle.css"
@@ -8,15 +9,17 @@ function LoginForm() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const login = () => {
+    const {setToken} = useContext(AuthContext);
+    
+    const login = (e) => {
+        e.preventDefault();
         Axios.post("http://localhost:3001/api/auth/login", {
             email: email,
             password: password
-        }).then(() => {
-            console.log("Success!");
+        }).then((response) => {
+           localStorage.setItem('myToken', response.data.accessToken);
+           setToken(response.data.accessToken);
         })
-        
     }
     
     return (
