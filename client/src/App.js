@@ -14,7 +14,7 @@ function App() {
 
   return (
     <Router>
-      {token ? <Redirect to="/frontpage"/> : "/"}
+      {token ? <Redirect to="/frontpage"/> : <Redirect to="/"/>}
       <Switch>
         <AuthContext.Provider value={{token, setToken}}>
           <Route path="/" exact component={LoginForm}/>
