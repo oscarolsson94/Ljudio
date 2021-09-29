@@ -10,7 +10,7 @@ function App() {
   
   useEffect(() => {
       setToken(localStorage.getItem("myToken"));
-  },[]);
+  },[token]);
 
   return (
     <Router>
