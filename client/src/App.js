@@ -10,11 +10,11 @@ function App() {
   
   useEffect(() => {
       setToken(localStorage.getItem("myToken"));
-  },[]);
+  },[token]);
 
   return (
     <Router>
-      {token ? <Redirect to="/frontpage"/> : "/"}
+      {token ? <Redirect to="/frontpage"/> : <Redirect to="/"/>}
       <Switch>
         <AuthContext.Provider value={{token, setToken}}>
           <Route path="/" exact component={LoginForm}/>
