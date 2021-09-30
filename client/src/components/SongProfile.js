@@ -5,7 +5,7 @@ function SongProfile() {
 
   const [duration, setDuration] = useState();
   const [progress, setProgress] = useState();
-  const [playing, setPlaying] = useState();
+  const [playing, setPlaying] = useState(false);
   const [player, setPlayer] = useState();
 
 
@@ -16,16 +16,20 @@ function SongProfile() {
   }, [])
 
   const playVideo = () => {
+    setDuration(player.getDuration());
     player.play();
+    setPlaying(true)
   }
 
   const pauseVideo = () => {
     player.pause();
+    setPlaying(false);
   }
 
   return (
     <div>
       <div id="ytPlayer"></div>
+      <progress value={progress} max={duration}/>
       <div>
       
         <button onClick={playVideo}>Play</button>
