@@ -11,6 +11,7 @@ function SongProfile() {
 
   useEffect(() => {
     let ytPlayer = new YTPlayer("#ytPlayer")
+    setPlayer(ytPlayer);
     player.load("5ys27BJXDD0");
   }, [])
 
