@@ -35,7 +35,7 @@ function SongProfile() {
   }
 
   return (
-    <div>
+    <div className="body">
       <div id="ytPlayer"></div>
       <progress value={progress} max={duration}/>
       <div>

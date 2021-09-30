@@ -1,4 +1,15 @@
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.body progress{
+    width: 80%;
+}
+
 #ytPlayer{
    height: 0px;
    width: 0px;
 }
+
