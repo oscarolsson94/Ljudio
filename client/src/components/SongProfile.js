@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, {useState, useEffect} from 'react'
 import YTPlayer from "yt-player";
 import "../styling/SongProfileStyle.css"
@@ -9,12 +10,22 @@ function SongProfile() {
   const [playing, setPlaying] = useState(false);
   const [player, setPlayer] = useState();
 
+  
 
   useEffect(() => {
     let ytPlayer = new YTPlayer("#ytPlayer")
-    ytPlayer.load("5ys27BJXDD0");
+    ytPlayer.load("f6z2dS5KHgc");
     setPlayer(ytPlayer);   
-  }, [])
+    getData();
+  }, []);
+
+
+
+  const getData = async() => {
+    const response = await fetch("https://yt-music-api.herokuapp.com/api/yt/song/f6z2dS5KHgc")
+    let result = await response.json();
+    console.log(result)
+  }
 
   const playVideo = () => {
     setDuration(player.getDuration());
