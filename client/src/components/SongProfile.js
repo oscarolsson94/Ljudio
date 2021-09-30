@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import YTPlayer from "yt-player";
+import "../styling/SongProfileStyle.css"
 
 function SongProfile() {
 
