@@ -3,11 +3,14 @@ import YTPlayer from "yt-player";
 
 function SongProfile() {
 
-  let player;
+  const[duration, setDuration] = useState(),
+  const[progress, setProgress] = useState();
+  const[playing, setPlaying] = useState();
+  const[player, setPlayer] = useState();
+
 
   useEffect(() => {
-    player = new YTPlayer("#ytPlayer")
-
+    let ytPlayer = new YTPlayer("#ytPlayer")
     player.load("5ys27BJXDD0");
   }, [])
 
