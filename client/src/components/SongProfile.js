@@ -20,6 +20,13 @@ function SongProfile() {
     player.play();
     setPlaying(true)
   }
+  
+  if(playing){
+    setInterval(() => { 
+      setProgress(player.getCurrentTime());
+    }, 1000);
+  }
+  
 
   const pauseVideo = () => {
     player.pause();
@@ -30,6 +37,7 @@ function SongProfile() {
     <div>
       <div id="ytPlayer"></div>
       <progress value={progress} max={duration}/>
+      <p>{progress}</p>
       <div>
       
         <button onClick={playVideo}>Play</button>
