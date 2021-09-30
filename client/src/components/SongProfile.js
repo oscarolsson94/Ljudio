@@ -37,7 +37,6 @@ function SongProfile() {
     <div>
       <div id="ytPlayer"></div>
       <progress value={progress} max={duration}/>
-      <p>{progress}</p>
       <div>
       
         <button onClick={playVideo}>Play</button>
