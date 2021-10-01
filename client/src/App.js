@@ -11,16 +11,18 @@ import Player from "./components/Player";
 import { UserContext } from "./UserContext";
 
 function App() {
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    token: "",
-    playLists: [],
-  });
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || {
+      username: "",
+      email: "",
+      token: "",
+      playLists: [],
+    }
+  );
 
   useEffect(() => {
-    setUser(localStorage.getItem("user"));
-  }, []);
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

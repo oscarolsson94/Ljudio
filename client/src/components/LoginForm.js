@@ -25,7 +25,7 @@ function LoginForm() {
         email: response.data.email,
         token: response.data.accessToken,
       });
-      history.push("#"); //change to playlist page later
+      history.push("/playlists");
     });
   };
 
