@@ -1,0 +1,20 @@
+.body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.body img{
+    border-radius: 4px;
+    margin-top: 30px;
+}
+
+.progressBar{
+    width: 80%;
+}
+
+#ytPlayer{
+   height: 0px;
+   width: 0px;
+}
+
