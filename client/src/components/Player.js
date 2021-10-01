@@ -52,10 +52,11 @@ function Player() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddToList = () => {
-    /* axios.patch(`http://localhost:3001/api/lists/addto/${listTitle}`, {
+  const handleAddToList = (e) => {
+    e.preventDefault();
+    axios.patch(`http://localhost:3001/api/lists/addto/${e.target.value}`, {
       songURL: videoId,
-    }); */
+    });
   };
 
   const playVideo = () => {
@@ -95,7 +96,11 @@ function Player() {
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
         {/* loop over the users playlists */}
         {user.playLists?.map((list) => (
-          <div key={list.title} onClick={() => handleAddToList}>
+          <div
+            key={list.listURL}
+            value={list.title}
+            onClick={() => handleAddToList}
+          >
             {list.title}
           </div>
         ))}
