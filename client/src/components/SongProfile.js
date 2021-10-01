@@ -44,7 +44,7 @@ function SongProfile() {
   const changeVideoProgress = async(event) => {
     pauseVideo();
     let newProgressValue = await event.target.value;
-    setProgress(newProgress);
+    setProgress(newProgressValue);
     player.seek(progress);
   }
 
