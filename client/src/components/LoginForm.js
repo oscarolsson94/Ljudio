@@ -28,7 +28,7 @@ function LoginForm() {
     });
   };
 
-  if (user.username) return <Redirect to="/playlists" />;
+  if (user.token) return <Redirect to="/playlists" />;
   return (
     <form className="form">
       <p>Email</p>
