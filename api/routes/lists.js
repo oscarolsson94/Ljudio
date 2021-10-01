@@ -14,7 +14,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//CREATE
+//CREATE body{title, username, }
 router.post("/", verify, async (req, res) => {
   const newList = new List(req.body);
   try {
@@ -41,7 +41,7 @@ router.patch("/addto/:id", verify, async (req, res) => {
     await List.updateOne(
       { title: req.params.id },
       {
-        content: [...content, songURL],
+        content: [...content, req.body.songURL],
       }
     );
     res.status(201).json("The song has been added to the list");
@@ -56,7 +56,7 @@ router.patch("/removefrom/:id", verify, async (req, res) => {
     await List.updateOne(
       { title: req.params.id },
       {
-        content: content.filter((song) => song !== songURL),
+        content: content.filter((song) => song !== req.body.songURL),
       }
     );
     res.status(204).json("The song has been removed from the list");

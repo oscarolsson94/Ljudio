@@ -1,28 +1,34 @@
 import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import { useState, useEffect } from "react";
-import {BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
-import {AuthContext} from "./AuthContext"
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Player from "./components/Player";
+import { UserContext } from "./UserContext";
 
 function App() {
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || {
+      username: "",
+      email: "",
+      token: "",
+      playLists: [],
+    }
+  );
 
-  const [token, setToken] = useState(null);
-  
   useEffect(() => {
-      setToken(localStorage.getItem("myToken"));
-  },[token]);
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
 
   return (
-    <Router>
-      <Switch>
-        <AuthContext.Provider value={{token, setToken}}>
-          <Route path="/" exact component={LoginForm}/>
-          <Route path="/register" component={RegisterForm}/>
-          <Route path="/song=:videoId" component={Player}/>
-        </AuthContext.Provider>
-      </Switch>
-    </Router>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={LoginForm} />
+          <Route path="/register" component={RegisterForm} />
+          <Route path="/song=:videoId" component={Player} />
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 
