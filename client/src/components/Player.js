@@ -1,15 +1,18 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
+import { UserContext } from "../UserContext";
 
 function Player() {
   let { videoId } = useParams();
 
+  //Oscar
   const [listOpen, setListOpen] = useState(false);
-  const [lists, setLists] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+  //
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -37,11 +40,16 @@ function Player() {
     setPlayer(ytPlayer);
   }, [videoId]);
 
+  //Oscar
   useEffect(() => {
-    /*     const getPlaylists = async () => {
-      const { userLists } = await axios.get(`http://localhost:3001/api/lists/${user.name}`);
-      setLists(userLists);
-    }; */
+    const getPlaylists = async () => {
+      const { userLists } = await axios.get(
+        `http://localhost:3001/api/lists/${user.username}`
+      );
+      setUser({ ...user, playLists: userLists });
+    };
+    getPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleAddToList = () => {
@@ -86,12 +94,11 @@ function Player() {
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
         {/* loop over the users playlists */}
-        <p onClick={handleAddToList}>List 1</p>
-        <p>List 2</p>
-        <p>List 3</p>
-        <p>List 4</p>
-        <p>List 5</p>
-        <p>List 6</p>
+        {user.playLists?.map((list) => (
+          <div key={list.title} onClick={() => handleAddToList}>
+            {list.title}
+          </div>
+        ))}
       </Drawer>
       <img src={albumCover} alt="album cover"></img>
       <p>{artist}</p>
