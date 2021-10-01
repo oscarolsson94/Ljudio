@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
@@ -103,15 +103,25 @@ function Player() {
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
         {/* loop over the users playlists */}
-        {user.playLists?.map((list) => (
-          <div
-            key={list.title}
-            value={list.title}
-            onClick={() => handleAddToList}
-          >
-            <p>{list.title}</p>
-          </div>
-        ))}
+        {user.playLists ? (
+          <>
+            <h2>What playlist would you like to add {songName} to?</h2>
+            {user.playLists.map((list) => (
+              <div
+                key={list.title}
+                value={list.title}
+                onClick={() => handleAddToList}
+              >
+                <p>{list.title}</p>
+              </div>
+            ))}
+          </>
+        ) : (
+          <>
+            <h2>You have not created any playlists yet</h2>
+            <Link to="/playlists">Would you like to create one?</Link>
+          </>
+        )}
       </Drawer>
       <img src={albumCover} alt="album cover"></img>
       <p>{artist}</p>
