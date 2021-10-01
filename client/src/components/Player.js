@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react'
+import {useParams} from "react-router-dom";
 import YTPlayer from "yt-player";
-import "../styling/SongProfileStyle.css"
+import "../styling/PlayerStyle.css"
 
-function SongProfile() {
+function Player() {
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -12,7 +13,7 @@ function SongProfile() {
   const [albumCover, setAlbumCover] = useState();
   const [intervalId, setIntervalId] = useState(0);
 
-  let videoId = "2_ANCiQOEfw";
+  let { videoId } = useParams();
 
   useEffect(() => {
     const getData = async() => {
@@ -78,4 +79,4 @@ function SongProfile() {
   )
 }
 
-export default SongProfile
+export default Player;
