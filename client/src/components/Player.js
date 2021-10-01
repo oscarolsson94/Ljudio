@@ -57,6 +57,7 @@ function Player() {
     axios.patch(`http://localhost:3001/api/lists/addto/${e.target.value}`, {
       songURL: videoId,
     });
+    setListOpen(false);
   };
   //
 
