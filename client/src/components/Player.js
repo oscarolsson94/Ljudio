@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react'
-import {useParams} from "react-router-dom";
+import { useParams } from 'react-router-dom';
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css"
 
 function Player() {
+
+  let { videoId } = useParams();
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -12,8 +14,6 @@ function Player() {
   const [player, setPlayer] = useState();
   const [albumCover, setAlbumCover] = useState();
   const [intervalId, setIntervalId] = useState(0);
-
-  let { videoId } = useParams();
 
   useEffect(() => {
     const getData = async() => {
