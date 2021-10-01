@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { UserContext } from "../UserContext";
 
 function LoginForm() {
@@ -28,6 +28,7 @@ function LoginForm() {
     });
   };
 
+  if (user.username) return <Redirect to="/playlists" />;
   return (
     <form className="form">
       <p>Email</p>
