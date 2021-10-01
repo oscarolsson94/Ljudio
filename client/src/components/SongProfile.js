@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import YTPlayer from "yt-player";
 import "../styling/SongProfileStyle.css"
 
-function SongProfile({videoId}) {
+function SongProfile() {
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -11,11 +11,9 @@ function SongProfile({videoId}) {
   const [playing, setPlaying] = useState(false);
   const [player, setPlayer] = useState();
 
-  useEffect(() => {
-    let ytPlayer = new YTPlayer("#ytPlayer")
-    ytPlayer.load(videoId);
-    setPlayer(ytPlayer);   
+  let videoId = "n812rfvvteo";
 
+  useEffect(() => {
     const getData = async() => {
       const response = await fetch("https://yt-music-api.herokuapp.com/api/yt/song/" + videoId)
     let result = await response.json();
@@ -24,9 +22,13 @@ function SongProfile({videoId}) {
     setSongName(result.name);
     }
     getData();
+    
+    let ytPlayer = new YTPlayer("#ytPlayer")
+    ytPlayer.load(videoId);
+    setPlayer(ytPlayer);   
   }, [videoId]);
 
-  
+
   const playVideo = () => {
     setDuration(player.getDuration());
     player.play();
