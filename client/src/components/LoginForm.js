@@ -1,42 +1,56 @@
-import React from 'react'
-import { useState, useContext } from 'react';
-import { AuthContext } from '../AuthContext';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "../AuthContext";
+import { Link } from "react-router-dom";
 import Axios from "axios";
-import "../styling/FormStyle.css"
+import "../styling/FormStyle.css";
+import { useHistory } from "react-router-dom";
 
 function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { setToken } = useContext(AuthContext);
+  const history = useHistory();
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const {setToken} = useContext(AuthContext);
-    
-    const login = (e) => {
-        e.preventDefault();
-        Axios.post("http://localhost:3001/api/auth/login", {
-            email: email,
-            password: password
-        }).then((response) => {
-           localStorage.setItem('myToken', response.data.accessToken);
-           setToken(response.data.accessToken);
-        })
-    }
-    
-    return (
-      <form className="form">
-          <p>Email</p>
-          <input type="email" required onChange={(e) => setEmail(e.target.value)}></input>
+  const login = (e) => {
+    e.preventDefault();
+    Axios.post("http://localhost:3001/api/auth/login", {
+      email: email,
+      password: password,
+    }).then((response) => {
+      localStorage.setItem("myToken", response.data.accessToken);
+      setToken(response.data.accessToken);
+      history.push("#"); //change to playlist page later
+    });
+  };
 
-          <p>Password</p>
-          <input type="password" required onChange={(e) => setPassword(e.target.value)}></input>
-          
-          <hr/>
+  return (
+    <form className="form">
+      <p>Email</p>
+      <input
+        type="email"
+        required
+        onChange={(e) => setEmail(e.target.value)}
+      ></input>
 
-          <button type="submit" onClick={login}>Log in</button>
+      <p>Password</p>
+      <input
+        type="password"
+        required
+        onChange={(e) => setPassword(e.target.value)}
+      ></input>
 
-          <Link to="/register"><p>Not registered? Click here.</p></Link>
-      </form>    
-   );
+      <hr />
+
+      <button type="submit" onClick={login}>
+        Log in
+      </button>
+
+      <Link to="/register">
+        <p>Not registered? Click here.</p>
+      </Link>
+    </form>
+  );
 }
 
-export default LoginForm
+export default LoginForm;

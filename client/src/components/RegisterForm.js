@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Axios from "axios";
 import "../styling/FormStyle.css";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 function RegisterForm() {
   const [email, setEmail] = useState("");
@@ -50,6 +50,10 @@ function RegisterForm() {
         <button type="submit" onClick={createAccount}>
           Register
         </button>
+
+        <Link to="/register">
+          <p>Already registered? Go to Login.</p>
+        </Link>
       </form>
     </div>
   );
