@@ -4,7 +4,7 @@ const ListSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, unique: true },
     username: { type: String, required: true },
-    content: { type: Array },
+    content: { type: Array, default: [] },
     listURL: { type: String },
   },
   { timestamps: true }

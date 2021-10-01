@@ -14,7 +14,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//CREATE
+//CREATE body{title, username, }
 router.post("/", verify, async (req, res) => {
   const newList = new List(req.body);
   try {
