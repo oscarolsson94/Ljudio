@@ -9,6 +9,7 @@ function Player() {
   let { videoId } = useParams();
 
   const [listOpen, setListOpen] = useState(false);
+  const [lists, setLists] = useState([]);
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -35,6 +36,13 @@ function Player() {
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
   }, [videoId]);
+
+  useEffect(() => {
+    /*     const getPlaylists = async () => {
+      const { userLists } = await axios.get(`http://localhost:3001/api/lists/${user.name}`);
+      setLists(userLists);
+    }; */
+  }, []);
 
   const handleAddToList = () => {
     /* axios.patch(`http://localhost:3001/api/lists/addto/${listTitle}`, {
@@ -76,11 +84,15 @@ function Player() {
   };
   return (
     <div className="body">
-      <Drawer
-        anchor="right"
-        open={listOpen}
-        onClose={() => setListOpen(false)}
-      ></Drawer>
+      <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
+        {/* loop over the users playlists */}
+        <p onClick={handleAddToList}>List 1</p>
+        <p>List 2</p>
+        <p>List 3</p>
+        <p>List 4</p>
+        <p>List 5</p>
+        <p>List 6</p>
+      </Drawer>
       <img src={albumCover} alt="album cover"></img>
       <p>{artist}</p>
       <p>{songName}</p>

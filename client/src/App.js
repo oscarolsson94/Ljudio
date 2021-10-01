@@ -7,26 +7,31 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { AuthContext } from "./AuthContext";
 import Player from "./components/Player";
+import { UserContext } from "./UserContext";
 
 function App() {
-  const [token, setToken] = useState(null);
+  const [user, setUser] = useState({
+    username: "",
+    email: "",
+    token: "",
+    playLists: [],
+  });
 
   useEffect(() => {
-    setToken(localStorage.getItem("myToken"));
-  }, [token]);
+    setUser(localStorage.getItem("user"));
+  }, []);
 
   return (
-    <Router>
-      <Switch>
-        <AuthContext.Provider value={{ token, setToken }}>
+    <UserContext.Provider value={{ user, setUser }}>
+      <Router>
+        <Switch>
           <Route path="/" exact component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/song=:videoId" component={Player} />
-        </AuthContext.Provider>
-      </Switch>
-    </Router>
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

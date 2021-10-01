@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
 import { useHistory } from "react-router-dom";
+import { UserContext } from "../UserContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setToken } = useContext(AuthContext);
+  const { user, setUser } = useContext(UserContext);
   const history = useHistory();
 
   const login = (e) => {
@@ -19,7 +20,7 @@ function LoginForm() {
       password: password,
     }).then((response) => {
       localStorage.setItem("myToken", response.data.accessToken);
-      setToken(response.data.accessToken);
+      setUser({ ...user, token: response.data.accessToken });
       history.push("#"); //change to playlist page later
     });
   };
