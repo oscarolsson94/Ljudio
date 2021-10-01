@@ -1,6 +1,5 @@
 import React from "react";
 import { useState, useContext } from "react";
-import { AuthContext } from "../AuthContext";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
@@ -20,7 +19,12 @@ function LoginForm() {
       password: password,
     }).then((response) => {
       localStorage.setItem("myToken", response.data.accessToken);
-      setUser({ ...user, token: response.data.accessToken });
+      setUser({
+        ...user,
+        username: response.data.username,
+        email: response.data.email,
+        token: response.data.accessToken,
+      });
       history.push("#"); //change to playlist page later
     });
   };
