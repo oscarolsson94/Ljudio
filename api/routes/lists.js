@@ -56,7 +56,7 @@ router.patch("/removefrom/:id", verify, async (req, res) => {
     await List.updateOne(
       { title: req.params.id },
       {
-        content: content.filter((song) => song !== songURL),
+        content: content.filter((song) => song !== req.body.songURL),
       }
     );
     res.status(204).json("The song has been removed from the list");

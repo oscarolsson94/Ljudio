@@ -54,9 +54,15 @@ function Player() {
 
   const handleAddToList = (e) => {
     e.preventDefault();
-    axios.patch(`http://localhost:3001/api/lists/addto/${e.target.value}`, {
-      songURL: videoId,
-    });
+    axios.patch(
+      `http://localhost:3001/api/lists/addto/${e.target.value}`,
+      {
+        songURL: videoId,
+      },
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
     setListOpen(false);
   };
   //
