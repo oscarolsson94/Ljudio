@@ -98,11 +98,11 @@ function Player() {
         {/* loop over the users playlists */}
         {user.playLists?.map((list) => (
           <div
-            key={list.listURL}
+            key={list.title}
             value={list.title}
             onClick={() => handleAddToList}
           >
-            {list.title}
+            <p>{list.title}</p>
           </div>
         ))}
       </Drawer>
