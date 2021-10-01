@@ -7,11 +7,12 @@ function SongProfile() {
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
   const [duration, setDuration] = useState();
-  const [progress, setProgress] = useState();
-  const [playing, setPlaying] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [player, setPlayer] = useState();
+  const [albumCover, setAlbumCover] = useState();
+  const [intervalId, setIntervalId] = useState(0);
 
-  let videoId = "n812rfvvteo";
+  let videoId = "2_ANCiQOEfw";
 
   useEffect(() => {
     const getData = async() => {
@@ -20,6 +21,7 @@ function SongProfile() {
     console.log(result);
     setArtist(result.artist.name);
     setSongName(result.name);
+    setAlbumCover(result.thumbnails[1].url)
     }
     getData();
     
@@ -28,31 +30,45 @@ function SongProfile() {
     setPlayer(ytPlayer);   
   }, [videoId]);
 
-
   const playVideo = () => {
     setDuration(player.getDuration());
     player.play();
-    setPlaying(true)
+    startCount();
   }
   
-  if(playing){
-    setInterval(() => { 
-      setProgress(player.getCurrentTime());
-    }, 1000);
-  }
-  
-
   const pauseVideo = () => {
     player.pause();
-    setPlaying(false);
+    stopCount();
   }
 
+  const changeVideoProgress = async(event) => {
+    pauseVideo();
+    let newProgress = await event.target.value;
+    setProgress(newProgress);
+    player.seek(progress);
+  }
+
+  const startCount = () => {
+    const newIntervalId = setInterval(() => {
+      setProgress(player.getCurrentTime());
+    }, 1000)
+    setIntervalId(newIntervalId);
+  } 
+
+  const stopCount = () => {
+    if(intervalId){
+      clearInterval(intervalId);
+      setIntervalId(0);
+      return;
+    }
+  }
   return (
     <div className="body">
+      <img src={albumCover} alt="album cover"></img>
       <p>{artist}</p>
       <p>{songName}</p>
       <div id="ytPlayer"></div>
-      <progress value={progress} max={duration}/>
+      <input className="progressBar" type="range" value={progress} onChange={changeVideoProgress} onMouseUp={playVideo} max={duration}/>
       <div>
       
         <button onClick={playVideo}>Play</button>

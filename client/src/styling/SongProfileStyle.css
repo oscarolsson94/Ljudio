@@ -4,7 +4,12 @@
     align-items: center;
 }
 
-.body progress{
+.body img{
+    border-radius: 4px;
+    margin-top: 30px;
+}
+
+.progressBar{
     width: 80%;
 }
 
