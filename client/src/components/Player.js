@@ -3,9 +3,12 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
+import Drawer from "@material-ui/core/Drawer";
 
 function Player() {
   let { videoId } = useParams();
+
+  const [listOpen, setListOpen] = useState(false);
 
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
@@ -34,9 +37,9 @@ function Player() {
   }, [videoId]);
 
   const handleAddToList = () => {
-    axios.patch(`http://localhost:3001/api/lists/addto/${listTitle}`, {
+    /* axios.patch(`http://localhost:3001/api/lists/addto/${listTitle}`, {
       songURL: videoId,
-    });
+    }); */
   };
 
   const playVideo = () => {
@@ -73,6 +76,11 @@ function Player() {
   };
   return (
     <div className="body">
+      <Drawer
+        anchor="right"
+        open={listOpen}
+        onClose={() => setListOpen(false)}
+      ></Drawer>
       <img src={albumCover} alt="album cover"></img>
       <p>{artist}</p>
       <p>{songName}</p>
@@ -90,7 +98,7 @@ function Player() {
         <button onClick={pauseVideo}>Pause</button>
       </div>
       <div>
-        <button onClick={handleAddToList}>Add to my list</button>
+        <button onClick={() => setListOpen(true)}>Add to my list</button>
       </div>
     </div>
   );
