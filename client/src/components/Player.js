@@ -98,6 +98,12 @@ function Player() {
       return;
     }
   };
+
+  const resetSong = () => {
+    setProgress(0);
+    player.seek(0);
+  }
+
   return (
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
@@ -135,6 +141,7 @@ function Player() {
         max={duration}
       />
       <div>
+        <button onClick={resetSong}>Reset</button>
         <button onClick={playVideo}>Play</button>
         <button onClick={pauseVideo}>Pause</button>
       </div>
