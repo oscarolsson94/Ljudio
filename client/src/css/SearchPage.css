@@ -49,15 +49,7 @@
     background-color: rgb(184, 181, 181);
     size: inherit; 
 }
-.list-song{
-    background-color: rgb(184, 181, 181);
-    margin: 8px 0;
-    padding: 15px 20px;
-    border-radius: 5px;
-    color:black;
-    text-align:center;  
-    cursor:pointer;
-}
+
 .home{
     text-align:center;
 }
@@ -70,7 +62,29 @@
     align-content: center;
 } 
 
+
+.list-song{
+    background-color: rgb(184, 181, 181);
+    margin: 8px 0;
+    padding: 15px 20px;
+    border-radius: 5px;
+    color:black;
+    text-align:center;  
+    cursor:pointer;
+    display:flex;
+
+   
+}
+.song-name{
+    text-align: center;
+    font-size: 24px;
+}
+
 .image{
     cursor:pointer;
-
+    border-radius: 8px;
+    
+    
 }
+
+

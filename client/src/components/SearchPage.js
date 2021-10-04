@@ -20,12 +20,8 @@ function SearchPage() {
     )
     let result = await response.json()
     for (let i = 0; i < result.content.length; i++) {
-      console.log(result.content[i])
       let res = result.content[i]
-      let image = res.thumbnails[0].url
-      //images.push(image)
-      setImages(image)
-      console.log(image)
+      setImages(res.thumbnails[0].url)
     }
   }
   //Creates a button with the search figure with the search function
@@ -63,26 +59,26 @@ function SearchPage() {
         ></SearchButton>
       </div>
       <div>
-        <div>
-          {songs &&
-            songs.map((song) => (
-              <div className="list-song">
-                {song.name}
-                <searchImage>
-                  <div>
-                    {songs &&
-                      songs.map((song) => (
-                        <img src={song.thumbnails[0].url} alt="images" />
-                      ))}
-                  </div>
-                </searchImage>
+        {songs &&
+          songs.map((song) => (
+            <div className="list-song">
+              <div>
+                <img
+                  className="image"
+                  src={song.thumbnails[1].url}
+                  alt="images"
+                />
               </div>
-            ))}
-        </div>
+              <div>
+                  <h2>{input}</h2>
+                <h2 className="song-name">{song.name}</h2>
+              </div>
+            </div>
+          ))}
+      </div>
 
-        <div className="home">
-          <HomeButton></HomeButton>
-        </div>
+      <div className="home">
+        <HomeButton></HomeButton>
       </div>
     </>
   )
