@@ -6,6 +6,7 @@ import Player from "./components/Player";
 import { UserContext } from "./UserContext";
 import Playlists from "./components/Playlists";
 import NewPlaylist from "./components/NewPlaylist";
+import PlaylistPage from "./components/PlaylistPage";
 
 function App() {
   const [user, setUser] = useState(
@@ -30,6 +31,7 @@ function App() {
           <Route path="/song=:videoId" component={Player} />
           <Route path="/playlists" component={Playlists} />
           <Route path="/newPlaylist" component={NewPlaylist} />
+          <Route path="/playlist=:title" component={PlaylistPage} />
         </Switch>
       </Router>
     </UserContext.Provider>
