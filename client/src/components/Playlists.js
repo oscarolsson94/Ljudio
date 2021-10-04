@@ -1,12 +1,13 @@
 import axios from 'axios'
 import React, {useEffect, useContext} from 'react'
 import { UserContext } from '../UserContext';
-
+import { useHistory } from 'react-router';
 
 
 
 function Playlists() {
 
+    const history = useHistory()
     const {user, setUser} = useContext(UserContext);
 
     useEffect(() => {
@@ -23,6 +24,8 @@ function Playlists() {
     return (
         <div>
             <p>My Playlists</p>
+
+            <button onClick={() => {history.push("/newPlaylist")}}>New Playlist</button>
 
             <div className="playlists">
                 {user.playLists.map((playlist) => {
