@@ -29,7 +29,7 @@ function Playlists() {
 
             <div className="playlists">
                 {user.playLists.map((playlist) => {
-                    return <div key={playlist.title}><p>{playlist.title}</p></div>
+                    return <div onClick={() => {history.push("/playlist=" + playlist.title)}} key={playlist.title}><p>{playlist.title}</p></div>
                 })}
             </div>
         </div>
