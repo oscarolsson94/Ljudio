@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Player from "./components/Player";
 import { UserContext } from "./UserContext";
+import Playlists from "./components/Playlists";
 
 function App() {
   const [user, setUser] = useState(
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" exact component={LoginForm} />
           <Route path="/register" component={RegisterForm} />
           <Route path="/song=:videoId" component={Player} />
+          <Route path="/playlists" component={Playlists} />
         </Switch>
       </Router>
     </UserContext.Provider>
