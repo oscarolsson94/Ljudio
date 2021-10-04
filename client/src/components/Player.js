@@ -52,10 +52,9 @@ function Player() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddToList = (e) => {
-    e.preventDefault();
+  const handleAddToList = (title) => {
     axios.patch(
-      `http://localhost:3001/api/lists/addto/${e.target.value}`,
+      `http://localhost:3001/api/lists/addto/${title}`,
       {
         songURL: videoId,
       },
@@ -110,7 +109,7 @@ function Player() {
               <div
                 key={list._id}
                 value={list.title}
-                onClick={() => handleAddToList}
+                onClick={() => handleAddToList(list.title)}
               >
                 <p>{list.title}</p>
               </div>
