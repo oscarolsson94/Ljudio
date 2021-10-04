@@ -43,19 +43,18 @@ function Player() {
   //Oscar
   useEffect(() => {
     const getPlaylists = async () => {
-      const { userLists } = await axios.get(
+      const { data } = await axios.get(
         `http://localhost:3001/api/lists/${user.username}`
       );
-      setUser({ ...user, playLists: userLists });
+      setUser({ ...user, playLists: data });
     };
     getPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleAddToList = (e) => {
-    e.preventDefault();
+  const handleAddToList = (title) => {
     axios.patch(
-      `http://localhost:3001/api/lists/addto/${e.target.value}`,
+      `http://localhost:3001/api/lists/addto/${title}`,
       {
         songURL: videoId,
       },
@@ -108,9 +107,9 @@ function Player() {
             <h2>What playlist would you like to add {songName} to?</h2>
             {user.playLists.map((list) => (
               <div
-                key={list.title}
+                key={list._id}
                 value={list.title}
-                onClick={() => handleAddToList}
+                onClick={() => handleAddToList(list.title)}
               >
                 <p>{list.title}</p>
               </div>
