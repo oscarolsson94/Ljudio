@@ -8,7 +8,7 @@ function App() {
       <div className="container-search-page">
       <Switch>
         <Route path="/search" exact component={SearchPage}/>
-        <Route path="/playlist" exact component={PlayList}/>
+        <Route path="/playlist:/videoId" exact component={PlayList}/>
       </Switch>
       </div>
     </Router> 

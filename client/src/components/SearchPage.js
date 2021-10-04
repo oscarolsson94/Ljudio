@@ -5,7 +5,7 @@ import '../css/SearchPage.css'
 function SearchPage() {
   const [input, setInput] = useState('')
   const [songs, setSongs] = useState()
-  const [images, setImages] = useState()
+
   //Consult the youtube api to search for songs
   async function searchSong() {
     let response = await fetch(
@@ -14,16 +14,6 @@ function SearchPage() {
     let result = await response.json()
     setSongs(result.content)
   }
-  async function searchImage() {
-    let response = await fetch(
-      'https://yt-music-api.herokuapp.com/api/yt/songs/' + input,
-    )
-    let result = await response.json()
-    for (let i = 0; i < result.content.length; i++) {
-      let res = result.content[i]
-      setImages(res.thumbnails[0].url)
-    }
-  }
   //Creates a button with the search figure with the search function
   function SearchButton() {
     return (
@@ -31,7 +21,6 @@ function SearchPage() {
         className="search-button"
         onClick={() => {
           searchSong()
-          searchImage()
         }}
       >
         <FaSearch size={17} />
@@ -54,7 +43,6 @@ function SearchPage() {
         <SearchButton
           onClick={() => {
             searchSong()
-            searchImage()
           }}
         ></SearchButton>
       </div>
@@ -70,7 +58,7 @@ function SearchPage() {
                 />
               </div>
               <div>
-                  <h2>{input}</h2>
+                <h2>{song.artist.name}</h2>
                 <h2 className="song-name">{song.name}</h2>
               </div>
             </div>
