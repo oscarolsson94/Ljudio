@@ -13,9 +13,9 @@ function Playlists() {
     useEffect(() => {
         const getAllPlaylists = async() => {
             const result = await axios.get("http://localhost:3001/api/lists/" + user.username);  
-            const playlists = await result.data;
+            const playlists = result.data;
             
-            setUser({...user, Playlists: playlists});
+            setUser({...user, playLists: playlists});
         } 
         getAllPlaylists();
     }, []);
