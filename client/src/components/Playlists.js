@@ -17,15 +17,17 @@ function Playlists() {
             setUser({...user, Playlists: playlists});
         } 
         getAllPlaylists();
-    }, [])
+    }, []);
 
 
     return (
         <div>
             <p>My Playlists</p>
 
-            <div>
-
+            <div className="playlists">
+                {user.playLists.map((playlist) => {
+                    <div key={playlist.title}><p>{playlist.title}</p></div>
+                })}
             </div>
         </div>
     )
