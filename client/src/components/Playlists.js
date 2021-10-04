@@ -12,7 +12,7 @@ function Playlists() {
 
     useEffect(() => {
         const getAllPlaylists = async() => {
-            const result = await axios.get(axios.get("http://localhost:3001/api/lists/" + user.username));  
+            const result = await axios.get("http://localhost:3001/api/lists/" + user.username);  
             const playlists = await result.data;
             
             setUser({...user, Playlists: playlists});
@@ -29,7 +29,7 @@ function Playlists() {
 
             <div className="playlists">
                 {user.playLists.map((playlist) => {
-                    <div key={playlist.title}><p>{playlist.title}</p></div>
+                    return <div key={playlist.title}><p>{playlist.title}</p></div>
                 })}
             </div>
         </div>
