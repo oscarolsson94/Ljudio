@@ -119,7 +119,7 @@ function Player() {
         ) : (
           <>
             <h2>You have not created any playlists yet</h2>
-            <Link to="/playlists">Would you like to create one?</Link>
+            <Link to="/newPlaylist">Would you like to create one?</Link>
           </>
         )}
       </Drawer>

@@ -18,7 +18,7 @@ function Playlists() {
             setUser({...user, playLists: playlists});
         } 
         getAllPlaylists();
-    }, []);
+    }, [user, setUser]);
 
 
     return (
