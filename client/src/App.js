@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Player from "./components/Player";
 import { UserContext } from "./UserContext";
 import Playlists from "./components/Playlists";
+import NewPlaylist from "./components/NewPlaylist";
 
 function App() {
   const [user, setUser] = useState(
@@ -28,6 +29,7 @@ function App() {
           <Route path="/register" component={RegisterForm} />
           <Route path="/song=:videoId" component={Player} />
           <Route path="/playlists" component={Playlists} />
+          <Route path="/newPlaylist" component={NewPlaylist} />
         </Switch>
       </Router>
     </UserContext.Provider>
