@@ -152,7 +152,7 @@ function Player() {
       <p>{artist}</p>
       <p>{songName}</p>
       <div id="ytPlayer"></div>
-      <Slider value={progress} style={{width: 400}} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
+      <Slider style={{width: '80%'}} value={progress} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
       <div>
         <div className="buttons">
         <RestartAltIcon color="action" onClick={resetSong} fontSize="large" />
