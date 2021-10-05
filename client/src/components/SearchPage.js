@@ -52,7 +52,7 @@ function SearchPage() {
       <div>
         {songs &&
           songs.map((song) => (
-            <div className="list-song" onClick={() => history.push("/song=" + song.videoId)}>
+            <div className="list-song" onClick={() => history.push("/song=" + song.videoId)} key={song.videoId}>
               <div>
                 <img
                   className="image"
