@@ -4,6 +4,16 @@ import verify from "../verifyToken.js";
 
 const router = express.Router();
 
+//GET ONE LIST BY TITLE
+router.get("/single/:id", async (req, res) => {
+  try {
+    const userList = await List.findOne({ title: req.params.id });
+    res.send(userList);
+  } catch (error) {
+    res.status(404).json(err);
+  }
+});
+
 //GET ALL LISTS BY USERNAME - id = username
 router.get("/:id", async (req, res) => {
   try {
@@ -41,7 +51,7 @@ router.patch("/addto/:id", verify, async (req, res) => {
     await List.updateOne(
       { title: req.params.id },
       {
-        $push: { content: req.body.songURL },
+        $push: { content: req.body },
       }
     );
     res.status(201).json("The song has been added to the list");

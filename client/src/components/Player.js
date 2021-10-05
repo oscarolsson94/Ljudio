@@ -5,12 +5,12 @@ import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
 import Slider from "@material-ui/core/Slider";
-import PauseCircleFilledOutlinedIcon from '@mui/icons-material/PauseCircleFilledOutlined';
-import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
-import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
-import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
-import SkipNextIcon from '@mui/icons-material/SkipNext';
-import RestartAltIcon from "@mui/icons-material/RestartAlt"
+import PauseCircleFilledOutlinedIcon from "@mui/icons-material/PauseCircleFilledOutlined";
+import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
+import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
+import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
+import SkipNextIcon from "@mui/icons-material/SkipNext";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { UserContext } from "../UserContext";
 
 function Player() {
@@ -28,7 +28,7 @@ function Player() {
   const [player, setPlayer] = useState();
   const [albumCover, setAlbumCover] = useState();
   const [intervalId, setIntervalId] = useState(0);
-  const [playing, setPlaying] = useState(false); 
+  const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -45,7 +45,6 @@ function Player() {
     let ytPlayer = new YTPlayer("#ytPlayer");
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
-
   }, [videoId]);
 
   //Oscar
@@ -64,7 +63,10 @@ function Player() {
     axios.patch(
       `http://localhost:3001/api/lists/addto/${title}`,
       {
-        songURL: videoId,
+        songId: videoId,
+        title: songName,
+        artist,
+        coverPic: albumCover,
       },
       {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -74,14 +76,11 @@ function Player() {
   };
   //
 
-  
-
   const changeVideoProgress = async (event, newValue) => {
     pauseSong();
     setProgress(newValue);
     player.seek(progress);
   };
-  
 
   const startCount = () => {
     const newIntervalId = setInterval(() => {
@@ -103,7 +102,7 @@ function Player() {
     setProgress(0);
     player.seek(0);
     playSong();
-  }
+  };
 
   const playSong = () => {
     setDuration(player.getDuration());
@@ -122,9 +121,8 @@ function Player() {
     playbutton: {
       height: 60,
       width: 60,
-    }
-
-  }
+    },
+  };
 
   return (
     <div className="body">
@@ -154,16 +152,38 @@ function Player() {
       <p>{artist}</p>
       <p>{songName}</p>
       <div id="ytPlayer"></div>
-      <Slider style={{width: '80%'}} value={progress} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
+      <Slider
+        style={{ width: "80%" }}
+        value={progress}
+        onChange={changeVideoProgress}
+        onMouseUp={playSong}
+        max={duration}
+      />
       <div>
         <div className="buttons">
-        <RestartAltIcon fontSize="large" onClick={resetSong} color="action"/>
-        <SkipPreviousIcon color="action" fontSize="large" />
-        {playing ? <PauseCircleFilledOutlinedIcon color="action" style={styles.playbutton} onClick={pauseSong}/> : <PlayCircleFilledOutlinedIcon color="action" style={styles.playbutton} fontSize="large" onClick={playSong}/>}
-        <SkipNextIcon color="action" fontSize="large"/>
-        <AddBoxRoundedIcon color="action" onClick={() => setListOpen(true)} fontSize="large"/>
+          <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
+          <SkipPreviousIcon color="action" fontSize="large" />
+          {playing ? (
+            <PauseCircleFilledOutlinedIcon
+              color="action"
+              style={styles.playbutton}
+              onClick={pauseSong}
+            />
+          ) : (
+            <PlayCircleFilledOutlinedIcon
+              color="action"
+              style={styles.playbutton}
+              fontSize="large"
+              onClick={playSong}
+            />
+          )}
+          <SkipNextIcon color="action" fontSize="large" />
+          <AddBoxRoundedIcon
+            color="action"
+            onClick={() => setListOpen(true)}
+            fontSize="large"
+          />
         </div>
-        
       </div>
     </div>
   );
