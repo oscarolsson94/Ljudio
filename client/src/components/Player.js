@@ -100,8 +100,10 @@ function Player() {
   };
 
   const resetSong = () => {
+    stopCount();
     setProgress(0);
     player.seek(0);
+    startCount()
   }
 
   return (
