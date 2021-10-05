@@ -8,7 +8,9 @@ import Slider from "@material-ui/core/Slider";
 import PauseCircleFilledOutlinedIcon from '@mui/icons-material/PauseCircleFilledOutlined';
 import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import RestartAltIcon from "@mui/icons-material/RestartAlt"
 import { UserContext } from "../UserContext";
 
 function Player() {
@@ -155,8 +157,10 @@ function Player() {
       <Slider style={{width: '80%'}} value={progress} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
       <div>
         <div className="buttons">
-        <RestartAltIcon color="action" onClick={resetSong} fontSize="large" />
+        <RestartAltIcon fontSize="large" onClick={resetSong} color="action"/>
+        <SkipPreviousIcon color="action" fontSize="large" />
         {playing ? <PauseCircleFilledOutlinedIcon color="action" style={styles.playbutton} onClick={pauseSong}/> : <PlayCircleFilledOutlinedIcon color="action" style={styles.playbutton} fontSize="large" onClick={playSong}/>}
+        <SkipNextIcon color="action" fontSize="large"/>
         <AddBoxRoundedIcon color="action" onClick={() => setListOpen(true)} fontSize="large"/>
         </div>
         
