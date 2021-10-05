@@ -46,7 +46,14 @@ function Player() {
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
 
-  }, [videoId]);
+    return() => {
+      if(intervalId){
+        clearInterval(intervalId)
+      }
+    }
+    
+
+  }, [videoId, intervalId]);
 
   //Oscar
   useEffect(() => {
