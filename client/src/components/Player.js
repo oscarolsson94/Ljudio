@@ -4,6 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
+import PauseCircleFilledOutlinedIcon from '@mui/icons-material/PauseCircleFilledOutlined';
+import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
+import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import { UserContext } from "../UserContext";
 
 function Player() {
@@ -29,7 +33,6 @@ function Player() {
         "https://yt-music-api.herokuapp.com/api/yt/song/" + videoId
       );
       let result = await response.json();
-      console.log(result);
       setArtist(result.artist.name);
       setSongName(result.name);
       setAlbumCover(result.thumbnails[1].url);
@@ -40,9 +43,6 @@ function Player() {
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
 
-    return () => {
-      stopCount();
-    }
   }, [videoId]);
 
   //Oscar
@@ -74,7 +74,7 @@ function Player() {
   
 
   const changeVideoProgress = async (event) => {
-    pauseVideo();
+    pauseSong();
     let newProgressValue = await event.target.value;
     setProgress(newProgressValue);
     player.seek(progress);
@@ -100,21 +100,29 @@ function Player() {
     stopCount();
     setProgress(0);
     player.seek(0);
-    playVideo();
+    playSong();
   }
 
-  const playVideo = () => {
+  const playSong = () => {
     setDuration(player.getDuration());
     player.play();
     startCount();
     setPlaying(true);
   };
 
-  const pauseVideo = () => {
+  const pauseSong = () => {
     player.pause();
     stopCount();
     setPlaying(false);
   };
+
+  const styles = {
+    playbutton: {
+      height: 60,
+      width: 60,
+    }
+
+  }
 
   return (
     <div className="body">
@@ -149,13 +157,16 @@ function Player() {
         type="range"
         value={progress}
         onChange={changeVideoProgress}
-        onMouseUp={playVideo}
+        onMouseUp={playSong}
         max={duration}
       />
       <div>
-        <button onClick={resetSong}>Reset</button>
-        {playing ? <button onClick={pauseVideo}>Pause</button> :  <button onClick={playVideo}>Play</button>}
-        <button onClick={() => setListOpen(true)}>Add to my list</button>
+        <div className="buttons">
+        <RestartAltIcon color="action" onClick={resetSong} fontSize="large" />
+        {playing ? <PauseCircleFilledOutlinedIcon color="action" style={styles.playbutton} onClick={pauseSong}/> : <PlayCircleFilledOutlinedIcon color="action" style={styles.playbutton} fontSize="large" onClick={playSong}/>}
+        <AddBoxRoundedIcon color="action" onClick={() => setListOpen(true)} fontSize="large"/>
+        </div>
+        
       </div>
     </div>
   );
