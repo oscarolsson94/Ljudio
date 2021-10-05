@@ -7,7 +7,7 @@ function HomeButton(){
     let history = useHistory();
 
     function handleClick() {
-        history.push("/playlist");
+        history.push("/playlists");
       }
       return (
         <BsHouseFill type="button" className="home-button" onClick={handleClick}></BsHouseFill>
