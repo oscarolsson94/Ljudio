@@ -21,6 +21,7 @@ function Player() {
   const [player, setPlayer] = useState();
   const [albumCover, setAlbumCover] = useState();
   const [intervalId, setIntervalId] = useState(0);
+  const [playing, setPlaying] = useState(false); 
 
   useEffect(() => {
     const getData = async () => {
@@ -38,6 +39,10 @@ function Player() {
     let ytPlayer = new YTPlayer("#ytPlayer");
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
+
+    return () => {
+      stopCount();
+    }
   }, [videoId]);
 
   //Oscar
@@ -66,16 +71,7 @@ function Player() {
   };
   //
 
-  const playVideo = () => {
-    setDuration(player.getDuration());
-    player.play();
-    startCount();
-  };
-
-  const pauseVideo = () => {
-    player.pause();
-    stopCount();
-  };
+  
 
   const changeVideoProgress = async (event) => {
     pauseVideo();
@@ -83,6 +79,7 @@ function Player() {
     setProgress(newProgressValue);
     player.seek(progress);
   };
+  
 
   const startCount = () => {
     const newIntervalId = setInterval(() => {
@@ -103,8 +100,21 @@ function Player() {
     stopCount();
     setProgress(0);
     player.seek(0);
-    startCount()
+    playVideo();
   }
+
+  const playVideo = () => {
+    setDuration(player.getDuration());
+    player.play();
+    startCount();
+    setPlaying(true);
+  };
+
+  const pauseVideo = () => {
+    player.pause();
+    stopCount();
+    setPlaying(false);
+  };
 
   return (
     <div className="body">
@@ -144,10 +154,7 @@ function Player() {
       />
       <div>
         <button onClick={resetSong}>Reset</button>
-        <button onClick={playVideo}>Play</button>
-        <button onClick={pauseVideo}>Pause</button>
-      </div>
-      <div>
+        {playing ? <button onClick={pauseVideo}>Pause</button> :  <button onClick={playVideo}>Play</button>}
         <button onClick={() => setListOpen(true)}>Add to my list</button>
       </div>
     </div>
