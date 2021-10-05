@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
+import Slider from "@material-ui/core/Slider";
 import PauseCircleFilledOutlinedIcon from '@mui/icons-material/PauseCircleFilledOutlined';
 import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
 import AddBoxRoundedIcon from '@mui/icons-material/AddBoxRounded';
@@ -152,14 +153,7 @@ function Player() {
       <p>{artist}</p>
       <p>{songName}</p>
       <div id="ytPlayer"></div>
-      <input
-        className="progressBar"
-        type="range"
-        value={progress}
-        onChange={changeVideoProgress}
-        onMouseUp={playSong}
-        max={duration}
-      />
+      <Slider style={{width: 400}} value={progress} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
       <div>
         <div className="buttons">
         <RestartAltIcon color="action" onClick={resetSong} fontSize="large" />
