@@ -74,10 +74,9 @@ function Player() {
 
   
 
-  const changeVideoProgress = async (event) => {
+  const changeVideoProgress = async (event, newValue) => {
     pauseSong();
-    let newProgressValue = await event.target.value;
-    setProgress(newProgressValue);
+    setProgress(newValue);
     player.seek(progress);
   };
   
@@ -153,7 +152,7 @@ function Player() {
       <p>{artist}</p>
       <p>{songName}</p>
       <div id="ytPlayer"></div>
-      <Slider style={{width: 400}} value={progress} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
+      <Slider value={progress} style={{width: 400}} onChange={changeVideoProgress} onMouseUp={playSong} max={duration}/>
       <div>
         <div className="buttons">
         <RestartAltIcon color="action" onClick={resetSong} fontSize="large" />
