@@ -7,7 +7,7 @@ const router = express.Router();
 //GET ONE LIST BY TITLE
 router.get("/single/:id", async (req, res) => {
   try {
-    const userList = await List.find({ title: req.params.id });
+    const userList = await List.findOne({ title: req.params.id });
     res.send(userList);
   } catch (error) {
     res.status(404).json(err);
