@@ -19,13 +19,13 @@ function PlaylistPage() {
 
   return (
     <div>
-      <p>{title}</p>
+      <h1>{title}</h1>
       {playlist.map((song) => (
-        <div>
+        <div key={song._id}>
           <p>
-            <img src={song.coverPic} alt="album" />|{song.title} | {song.artist}
+            <img src={song.coverPic} alt="album" /> |{song.title} |{" "}
+            {song.artist}
           </p>
-          <p></p>
         </div>
       ))}
     </div>
