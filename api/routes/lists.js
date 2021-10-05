@@ -51,7 +51,7 @@ router.patch("/addto/:id", verify, async (req, res) => {
     await List.updateOne(
       { title: req.params.id },
       {
-        $push: { content: req.body.songURL },
+        $push: { content: req.body },
       }
     );
     res.status(201).json("The song has been added to the list");

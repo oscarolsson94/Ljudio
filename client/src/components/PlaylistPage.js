@@ -14,13 +14,16 @@ function PlaylistPage() {
       setPlaylist(result.data.content);
     };
     getAllPlaylists();
-  }, [title]);
+  }, []);
 
   return (
     <div>
       <p>{title}</p>
       {playlist.map((song) => (
-        <p>{song}</p>
+        <div>
+          <p>{song.title}</p>
+          <p>{song.artist}</p>
+        </div>
       ))}
     </div>
   );
