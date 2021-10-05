@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import HomeButton from './HomeButton'
 import '../styling/SearchPage.css';
+import { useHistory } from 'react-router';
 function SearchPage() {
   const [input, setInput] = useState('')
   const [songs, setSongs] = useState()
+
+  const history = useHistory();
 
   //Consult the youtube api to search for songs
   async function searchSong() {
@@ -49,7 +52,7 @@ function SearchPage() {
       <div>
         {songs &&
           songs.map((song) => (
-            <div className="list-song">
+            <div className="list-song" onClick={() => history.push("/song=" + song.videoId)}>
               <div>
                 <img
                   className="image"

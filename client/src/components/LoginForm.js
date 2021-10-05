@@ -24,11 +24,11 @@ function LoginForm() {
         email: response.data.email,
         token: response.data.accessToken,
       });
-      history.push("/playlists");
+      history.push("/searchpage");
     });
   };
 
-  if (user.token) return <Redirect to="/playlists" />;
+  if (user.token) return <Redirect to="/searchpage" />;
   return (
     <form className="form">
       <p>Email</p>
