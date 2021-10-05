@@ -17,6 +17,7 @@ function Playlists() {
       setUser({ ...user, playLists: playlists });
     };
     getAllPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

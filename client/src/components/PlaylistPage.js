@@ -14,6 +14,7 @@ function PlaylistPage() {
       setPlaylist(result.data.content);
     };
     getAllPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -21,8 +22,10 @@ function PlaylistPage() {
       <p>{title}</p>
       {playlist.map((song) => (
         <div>
-          <p>{song.title}</p>
-          <p>{song.artist}</p>
+          <p>
+            <img src={song.coverPic} alt="album" />|{song.title} | {song.artist}
+          </p>
+          <p></p>
         </div>
       ))}
     </div>
