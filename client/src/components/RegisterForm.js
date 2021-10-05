@@ -51,7 +51,7 @@ function RegisterForm() {
           Register
         </button>
 
-        <Link to="/register">
+        <Link to="/login">
           <p>Already registered? Go to Login.</p>
         </Link>
       </form>
