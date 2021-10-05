@@ -4,6 +4,16 @@ import verify from "../verifyToken.js";
 
 const router = express.Router();
 
+//GET ONE LIST BY TITLE
+router.get("/single/:id", async (req, res) => {
+  try {
+    const userList = await List.find({ title: req.params.id });
+    res.send(userList);
+  } catch (error) {
+    res.status(404).json(err);
+  }
+});
+
 //GET ALL LISTS BY USERNAME - id = username
 router.get("/:id", async (req, res) => {
   try {
