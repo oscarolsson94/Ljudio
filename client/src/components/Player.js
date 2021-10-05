@@ -45,15 +45,7 @@ function Player() {
     let ytPlayer = new YTPlayer("#ytPlayer");
     ytPlayer.load(videoId);
     setPlayer(ytPlayer);
-
-    return() => {
-      if(intervalId){
-        clearInterval(intervalId)
-      }
-    }
-    
-
-  }, [videoId, intervalId]);
+  }, [videoId]);
 
   //Oscar
   useEffect(() => {
@@ -66,6 +58,12 @@ function Player() {
     getPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    return() => {
+      clearInterval(intervalId);
+    }
+  }, [intervalId])
 
   const handleAddToList = (title) => {
     axios.patch(
@@ -103,6 +101,7 @@ function Player() {
       setIntervalId(0);
       return;
     }
+    
   };
 
   const resetSong = () => {
