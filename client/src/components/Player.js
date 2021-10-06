@@ -12,6 +12,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { UserContext } from "../contexts/UserContext";
+import { PlayerContext} from "../contexts/PlayerContext";
 
 function Player() {
   let { videoId } = useParams();
@@ -19,6 +20,7 @@ function Player() {
   //Oscar
   const [listOpen, setListOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const { queue } = useContext(PlayerContext);
   //
 
   const [artist, setArtist] = useState();
@@ -169,7 +171,7 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          <SkipPreviousIcon color="action" fontSize="large" />
+          {queue ? null : <SkipPreviousIcon color="action" fontSize="large" />}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
@@ -184,7 +186,7 @@ function Player() {
               onClick={playSong}
             />
           )}
-          <SkipNextIcon color="action" fontSize="large" />
+          {queue ? null : <SkipNextIcon color="action" fontSize="large" />}
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}
