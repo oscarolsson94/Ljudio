@@ -11,7 +11,7 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../contexts/UserContext";
 
 function Player() {
   let { videoId } = useParams();

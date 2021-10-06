@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useContext } from "react";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../contexts/UserContext";
 import { useHistory } from "react-router";
 
 function Playlists() {

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
 import { useHistory, Redirect } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../contexts/UserContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");

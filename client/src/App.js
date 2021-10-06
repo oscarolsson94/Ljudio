@@ -3,7 +3,7 @@ import RegisterForm from "./components/RegisterForm";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Player from "./components/Player";
-import { UserContext } from "./UserContext";
+import { UserContext } from "./contexts/UserContext";
 import Playlists from "./components/Playlists";
 import NewPlaylist from "./components/NewPlaylist";
 import PlaylistPage from "./components/PlaylistPage";
