@@ -1,10 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
+import { PlayerContext } from "../contexts/PlayerContext";
+import { useHistory } from "react-router";
 
 function PlaylistPage() {
   const { title } = useParams();
+  const { setQueue } = useContext(PlayerContext)
   const [playlist, setPlaylist] = useState([]);
+
+  const history = useHistory();
 
   useEffect(() => {
     const getAllPlaylists = async () => {
@@ -21,7 +26,7 @@ function PlaylistPage() {
     <div>
       <h1>{title}</h1>
       {playlist.map((song) => (
-        <div key={song._id}>
+        <div key={song._id} onClick={() => {history.push("/song=" + song.songId)}}>
           <p>
             <img src={song.coverPic} alt="album" /> |{song.title} |{" "}
             {song.artist}
@@ -30,6 +35,8 @@ function PlaylistPage() {
       ))}
     </div>
   );
+  
+
 }
 
 export default PlaylistPage;
