@@ -20,7 +20,7 @@ function Player() {
   //Oscar
   const [listOpen, setListOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const { queue } = useContext(PlayerContext);
+  const { queue, setQueue } = useContext(PlayerContext);
   //
 
   const [artist, setArtist] = useState();
@@ -171,7 +171,7 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          {queue ? null : <SkipPreviousIcon color="action" fontSize="large" />}
+          {queue ? <SkipPreviousIcon color="action" fontSize="large" /> : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
@@ -186,7 +186,7 @@ function Player() {
               onClick={playSong}
             />
           )}
-          {queue ? null : <SkipNextIcon color="action" fontSize="large" />}
+          {queue ? <SkipNextIcon color="action" fontSize="large" /> : null }
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}
