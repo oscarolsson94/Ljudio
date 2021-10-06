@@ -45,7 +45,7 @@ router.delete("/:id", verify, async (req, res) => {
   }
 });
 
-//ADD SONG TO LIST id = listTitle - send PATCH request with body{songURL}
+//ADD SONG TO LIST id = listTitle - send PATCH request with body{title, songId, artist, coverPic }
 router.patch("/addto/:id", verify, async (req, res) => {
   try {
     await List.updateOne(
@@ -60,7 +60,7 @@ router.patch("/addto/:id", verify, async (req, res) => {
   }
 });
 
-//REMOVE SONG FROM LIST id = listTitle - send PATCH request with body{songURL}
+//REMOVE SONG FROM LIST id = title - send PATCH request with body{songId}
 router.patch("/removefrom/:id", verify, async (req, res) => {
   try {
     await List.updateOne(
