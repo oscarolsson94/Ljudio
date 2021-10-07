@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
@@ -11,16 +11,17 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../contexts/UserContext";
+import { PlayerContext} from "../contexts/PlayerContext";
 
 function Player() {
   let { videoId } = useParams();
-
+  let history = useHistory();
   //Oscar
   const [listOpen, setListOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const { queue, setQueue } = useContext(PlayerContext);
   //
-
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
   const [duration, setDuration] = useState();
@@ -30,7 +31,28 @@ function Player() {
   const [intervalId, setIntervalId] = useState(0);
   const [playing, setPlaying] = useState(false);
 
+
+  //-----------------------OnMount-----------------------
+
   useEffect(() => {
+
+    const setupPlayer = () => {
+      let ytPlayer = new YTPlayer("#ytPlayer");
+      ytPlayer.load(videoId);
+      setPlayer(ytPlayer);
+
+      ytPlayer.on("unstarted", () => {
+        setDuration(ytPlayer.getDuration());
+        ytPlayer.play();
+        const newIntervalId = setInterval(() => {
+          setProgress(ytPlayer.getCurrentTime());
+        }, 1000);
+        setIntervalId(newIntervalId);
+        setPlaying(true);
+      })
+    }
+    setupPlayer();
+
     const getData = async () => {
       const response = await fetch(
         "https://yt-music-api.herokuapp.com/api/yt/song/" + videoId
@@ -41,11 +63,9 @@ function Player() {
       setAlbumCover(result.thumbnails[1].url);
     };
     getData();
-
-    let ytPlayer = new YTPlayer("#ytPlayer");
-    ytPlayer.load(videoId);
-    setPlayer(ytPlayer);
   }, [videoId]);
+
+  
 
   //Oscar
   useEffect(() => {
@@ -58,6 +78,27 @@ function Player() {
     getPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  //-----------------------OnMount-----------------------
+
+  //-----------------------cleanup-----------------------
+
+  useEffect(() => {
+    return() => {
+      clearInterval(intervalId);
+    }
+  }, [intervalId])
+
+  const cleanUp = () => {
+    player.destroy();
+    stopCount();
+    if(playing){
+      setPlaying(false);
+    }
+    setProgress(0);
+  }
+
+  //-----------------------cleanup-----------------------
 
   const handleAddToList = (title) => {
     axios.patch(
@@ -95,6 +136,7 @@ function Player() {
       setIntervalId(0);
       return;
     }
+    
   };
 
   const resetSong = () => {
@@ -123,6 +165,32 @@ function Player() {
       width: 60,
     },
   };
+
+  const playNextSong = () => {
+
+    if(queue.queueIndex === queue.queueList.length - 1){
+      setQueue({...queue, queueIndex: 0})
+      history.push("/song=" + queue.queueList[0].songId);
+    }
+    else{
+      setQueue({...queue, queueIndex: ++queue.queueIndex})
+      history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+    }
+    cleanUp();
+  }
+
+  const playPreviousSong = () => {
+    if(queue.queueIndex === 0){
+      setQueue({...queue, queueIndex: queue.queueList.length - 1})
+      history.push("/song=" + queue.queueList[queue.queueList.length - 1].songId);
+    }
+    else{
+      setQueue({...queue, queueIndex: --queue.queueIndex})
+      history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+    }
+    cleanUp();
+  }
+  
 
   return (
     <div className="body">
@@ -162,7 +230,7 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          <SkipPreviousIcon color="action" fontSize="large" />
+          {queue.queueList.length ? <SkipPreviousIcon onClick={playPreviousSong} color="action" fontSize="large" /> : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
@@ -177,7 +245,7 @@ function Player() {
               onClick={playSong}
             />
           )}
-          <SkipNextIcon color="action" fontSize="large" />
+          {queue.queueList.length ? <SkipNextIcon onClick={playNextSong} color="action" fontSize="large" /> : null }
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}

@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react';
+import { PlayerContext } from '../contexts/PlayerContext';
 import { FaSearch } from 'react-icons/fa'
 import HomeButton from './HomeButton'
 import '../styling/SearchPage.css';
 import { useHistory } from 'react-router';
+
 function SearchPage() {
   const [input, setInput] = useState('')
   const [songs, setSongs] = useState()
-
   const history = useHistory();
+
+  const {setQueue} = useContext(PlayerContext);
+
+  useEffect(() => {
+    setQueue({
+      queueList: [],
+      queueIndex: 0
+    })
+  }, [setQueue])
 
   //Consult the youtube api to search for songs
   async function searchSong() {
