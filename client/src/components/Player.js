@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
@@ -16,13 +16,12 @@ import { PlayerContext} from "../contexts/PlayerContext";
 
 function Player() {
   let { videoId } = useParams();
-
+  let history = useHistory();
   //Oscar
   const [listOpen, setListOpen] = useState(false);
   const { user, setUser } = useContext(UserContext);
   const { queue, setQueue } = useContext(PlayerContext);
   //
-
   const [artist, setArtist] = useState();
   const [songName, setSongName] = useState();
   const [duration, setDuration] = useState();
@@ -32,7 +31,28 @@ function Player() {
   const [intervalId, setIntervalId] = useState(0);
   const [playing, setPlaying] = useState(false);
 
+
+  //-----------------------OnMount-----------------------
+
   useEffect(() => {
+
+    const setupPlayer = () => {
+      let ytPlayer = new YTPlayer("#ytPlayer");
+      ytPlayer.load(videoId);
+      setPlayer(ytPlayer);
+
+      ytPlayer.on("unstarted", () => {
+        setDuration(ytPlayer.getDuration());
+        ytPlayer.play();
+        const newIntervalId = setInterval(() => {
+          setProgress(ytPlayer.getCurrentTime());
+        }, 1000);
+        setIntervalId(newIntervalId);
+        setPlaying(true);
+      })
+    }
+    setupPlayer();
+
     const getData = async () => {
       const response = await fetch(
         "https://yt-music-api.herokuapp.com/api/yt/song/" + videoId
@@ -43,11 +63,9 @@ function Player() {
       setAlbumCover(result.thumbnails[1].url);
     };
     getData();
-
-    let ytPlayer = new YTPlayer("#ytPlayer");
-    ytPlayer.load(videoId);
-    setPlayer(ytPlayer);
   }, [videoId]);
+
+  
 
   //Oscar
   useEffect(() => {
@@ -61,11 +79,26 @@ function Player() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //-----------------------OnMount-----------------------
+
+  //-----------------------cleanup-----------------------
+
   useEffect(() => {
     return() => {
       clearInterval(intervalId);
     }
   }, [intervalId])
+
+  const cleanUp = () => {
+    player.destroy();
+    stopCount();
+    if(playing){
+      setPlaying(false);
+    }
+    setProgress(0);
+  }
+
+  //-----------------------cleanup-----------------------
 
   const handleAddToList = (title) => {
     axios.patch(
@@ -133,6 +166,21 @@ function Player() {
     },
   };
 
+  const playNextSong = () => {
+    cleanUp();
+    if(queue.queueIndex === queue.queueList.length - 1){
+      setQueue({...queue, queueIndex: 0})
+    }
+    else{
+      setQueue({...queue, queueIndex: queue.queueIndex + 1})
+    }
+    console.log(queue.queueList.length)
+    console.log(queue.queueIndex);
+    history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+    
+  }
+  
+
   return (
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
@@ -186,7 +234,7 @@ function Player() {
               onClick={playSong}
             />
           )}
-          {queue ? <SkipNextIcon color="action" fontSize="large" /> : null }
+          {queue ? <SkipNextIcon onClick={playNextSong} color="action" fontSize="large" /> : null }
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}
