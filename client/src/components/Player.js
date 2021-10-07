@@ -167,20 +167,31 @@ function Player() {
   };
 
   const playNextSong = () => {
-    setQueue({...queue, queueIndex: ++queue.queueIndex})
 
-    if(queue.queueIndex === queue.queueList.length){
+    if(queue.queueIndex === queue.queueList.length - 1){
       setQueue({...queue, queueIndex: 0})
       history.push("/song=" + queue.queueList[0].songId);
     }
     else{
+      setQueue({...queue, queueIndex: ++queue.queueIndex})
+      history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+    }
+  
+    cleanUp();
+    
+  }
+
+  const playPreviousSong = () => {
+    if(queue.queueIndex === 0){
+      setQueue({...queue, queueIndex: queue.queueList.length - 1})
+      history.push("/song=" + queue.queueList[queue.queueList.length - 1].songId);
+    }
+    else{
+      setQueue({...queue, queueIndex: --queue.queueIndex})
       history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
     
-
-    console.log(queue.queueList.length)
     cleanUp();
-    
   }
   
 
@@ -222,7 +233,7 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          {queue.queueList.length ? <SkipPreviousIcon color="action" fontSize="large" /> : null}
+          {queue.queueList.length ? <SkipPreviousIcon onClick={playPreviousSong} color="action" fontSize="large" /> : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
