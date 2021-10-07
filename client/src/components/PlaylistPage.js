@@ -6,7 +6,7 @@ import { useHistory } from "react-router";
 
 function PlaylistPage() {
   const { title } = useParams();
-  const { setQueue } = useContext(PlayerContext)
+  const { queue, setQueue } = useContext(PlayerContext)
   const [playlist, setPlaylist] = useState([]);
 
   const history = useHistory();
@@ -17,13 +17,20 @@ function PlaylistPage() {
         "http://localhost:3001/api/lists/single/" + title
       );
       setPlaylist(result.data.content);
+      setQueue({...queue, queueList: result.data.content});
     };
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
+  const playPlaylist = () => {
+    history.push("/song=" + playlist[0].songId);
+  }
+
   return (
     <div>
+      <button onClick={playPlaylist}>Playlist player</button>
       <h1>{title}</h1>
       {playlist.map((song) => (
         <div key={song._id} onClick={() => {history.push("/song=" + song.songId)}}>
