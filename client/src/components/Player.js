@@ -176,9 +176,7 @@ function Player() {
       setQueue({...queue, queueIndex: ++queue.queueIndex})
       history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
-  
     cleanUp();
-    
   }
 
   const playPreviousSong = () => {
@@ -190,7 +188,6 @@ function Player() {
       setQueue({...queue, queueIndex: --queue.queueIndex})
       history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
-    
     cleanUp();
   }
   
