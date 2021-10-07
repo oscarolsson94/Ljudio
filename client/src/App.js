@@ -11,7 +11,12 @@ import SearchPage from "./components/SearchPage";
 import { PlayerContext } from "./contexts/PlayerContext";
 
 function App() {
-  const [queue, setQueue] = useState();
+  
+  const [queue, setQueue] = useState({
+    queueList: [],
+    queueIndex: 0
+  });
+
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || {
       username: "",
