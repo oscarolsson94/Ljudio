@@ -167,16 +167,19 @@ function Player() {
   };
 
   const playNextSong = () => {
-    cleanUp();
-    if(queue.queueIndex === queue.queueList.length - 1){
+    setQueue({...queue, queueIndex: ++queue.queueIndex})
+
+    if(queue.queueIndex === queue.queueList.length){
       setQueue({...queue, queueIndex: 0})
+      history.push("/song=" + queue.queueList[0].songId);
     }
     else{
-      setQueue({...queue, queueIndex: queue.queueIndex + 1})
+      history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
+    
+
     console.log(queue.queueList.length)
-    console.log(queue.queueIndex);
-    history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+    cleanUp();
     
   }
   
