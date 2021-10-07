@@ -28,12 +28,18 @@ function PlaylistPage() {
     history.push("/song=" + playlist[0].songId);
   }
 
+  const playSong = (song, index) => {
+    history.push("/song=" + song.songId);
+    setQueue({...queue, queueIndex: index})
+    console.log(queue.queueIndex);
+  }
+
   return (
     <div>
       <button onClick={playPlaylist}>Playlist player</button>
       <h1>{title}</h1>
-      {playlist.map((song) => (
-        <div key={song._id} onClick={() => {history.push("/song=" + song.songId)}}>
+      {playlist.map((song, index) => (
+        <div key={song._id} onClick={() => {playSong(song, index)}}>
           <p>
             <img src={song.coverPic} alt="album" /> |{song.title} |{" "}
             {song.artist}
