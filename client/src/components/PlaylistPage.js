@@ -37,10 +37,14 @@ function PlaylistPage() {
     console.log(queue.queueIndex);
   }
 
+  const goBack = () => {
+    history.push("/playlists");
+  }
+
   return (
     <div className="site">
       <div className="header">
-        <ArrowBackIosNewOutlinedIcon fontSize="large"/>
+        <ArrowBackIosNewOutlinedIcon onClick={goBack} fontSize="large"/>
         <h1>{title}</h1>
         <PlayCircleFilledOutlinedIcon color="action" fontSize="large" onClick={playPlaylist}/>
       </div>
