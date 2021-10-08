@@ -5,6 +5,7 @@ import { PlayerContext } from "../contexts/PlayerContext";
 import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 import { useHistory } from "react-router";
+import { UserContext } from "../contexts/UserContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "../styling/PlaylistPageStyle.css";
 
@@ -12,6 +13,8 @@ function PlaylistPage() {
   const { title } = useParams();
   const { queue, setQueue } = useContext(PlayerContext);
   const [playlist, setPlaylist] = useState([]);
+
+  const { user } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -41,8 +44,16 @@ function PlaylistPage() {
     history.push("/playlists");
   };
 
-  const handleDelete = () => {
-    console.log("delete");
+  const handleDelete = (song) => {
+    axios.patch(
+      `http://localhost:3001/api/lists/removefrom/${title}`,
+      {
+        songId: song.songId,
+      },
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
   };
 
   return (
@@ -58,7 +69,7 @@ function PlaylistPage() {
       </div>
 
       <div className="listContent">
-        {playlist.map((song, index) => (
+        {playlist?.map((song, index) => (
           <div
             className="songBody"
             key={song._id}
@@ -71,7 +82,7 @@ function PlaylistPage() {
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon onClick={handleDelete} />
+            <DeleteIcon onClick={() => handleDelete(song)} />
           </div>
         ))}
       </div>
