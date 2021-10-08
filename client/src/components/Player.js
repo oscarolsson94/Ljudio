@@ -233,7 +233,7 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          {queue.queueList.length ? <SkipPreviousIcon onClick={playPreviousSong} color="action" fontSize="large" /> : null}
+          {queue.queueList.length > 1 ? <SkipPreviousIcon onClick={playPreviousSong} color="action" fontSize="large" /> : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
@@ -248,7 +248,7 @@ function Player() {
               onClick={playSong}
             />
           )}
-          {queue.queueList.length ? <SkipNextIcon onClick={playNextSong} color="action" fontSize="large" /> : null }
+          {queue.queueList.length > 1 ? <SkipNextIcon onClick={playNextSong} color="action" fontSize="large" /> : null }
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}
