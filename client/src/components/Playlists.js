@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useHistory } from "react-router";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Playlists() {
   const history = useHistory();
@@ -19,6 +20,10 @@ function Playlists() {
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDelete = () => {
+    console.log("delete");
+  };
 
   return (
     <div>
@@ -42,6 +47,7 @@ function Playlists() {
               key={playlist.title}
             >
               <p>{playlist.title}</p>
+              <DeleteIcon onClick={handleDelete} color="primary" />
             </div>
           );
         })}
