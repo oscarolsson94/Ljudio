@@ -2,7 +2,10 @@ import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router";
 import { PlayerContext } from "../contexts/PlayerContext";
+import PlayCircleFilledOutlinedIcon from '@mui/icons-material/PlayCircleFilledOutlined';
+import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import { useHistory } from "react-router";
+import "../styling/PlaylistPageStyle.css";
 
 function PlaylistPage() {
   const { title } = useParams();
@@ -35,17 +38,27 @@ function PlaylistPage() {
   }
 
   return (
-    <div>
-      <button onClick={playPlaylist}>Playlist player</button>
-      <h1>{title}</h1>
-      {playlist.map((song, index) => (
-        <div key={song._id} onClick={() => {playSong(song, index)}}>
-          <p>
-            <img src={song.coverPic} alt="album" /> |{song.title} |{" "}
-            {song.artist}
-          </p>
-        </div>
+    <div className="site">
+      <div className="header">
+        <ArrowBackIosNewOutlinedIcon fontSize="large"/>
+        <h1>{title}</h1>
+        <PlayCircleFilledOutlinedIcon color="action" fontSize="large" onClick={playPlaylist}/>
+      </div>
+
+      <div className="listContent">
+        {playlist.map((song, index) => (
+          <div className="songBody" key={song._id} onClick={() => {playSong(song, index)}}>
+            <img src={song.coverPic} alt="album" /> 
+            <div className="textContent">
+              <p>{song.artist}</p>
+              <p>{song.title}</p>
+            </div>
+          </div>
       ))}
+
+      </div>
+      
+      
     </div>
   );
   
