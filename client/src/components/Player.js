@@ -184,7 +184,7 @@ function Player() {
 
     if(queue.queueIndex === 0){
       setQueue({...queue, queueIndex: queue.queueList.length - 1})
-      history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+      history.push("/song=" + queue.queueList[queue.queueList.length - 1].songId);
     }
     else{
       setQueue({...queue, queueIndex: --queue.queueIndex})
