@@ -54,6 +54,7 @@ function PlaylistPage() {
         headers: { Authorization: `Bearer ${user.token}` },
       }
     );
+    //removes from DB, still needs to update list state and
   };
 
   return (
@@ -82,7 +83,7 @@ function PlaylistPage() {
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon onClick={() => handleDelete(song)} />
+            <DeleteIcon fontSize="large" onClick={() => handleDelete(song)} />
           </div>
         ))}
       </div>
