@@ -75,11 +75,8 @@ function PlaylistPage() {
 
       <div className="listContent">
         {playlist?.map((song, index) => (
-          <div className="songBody" key={song._id}>
+          <div className="songBody" key={song._id} onClick={() => {playSong(song, index)}}>
             <img
-              onClick={() => {
-                playSong(song, index);
-              }}
               src={song.coverPic}
               alt="album"
             />
