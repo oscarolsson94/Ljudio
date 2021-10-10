@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useHistory } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -7,6 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 function Playlists() {
   const history = useHistory();
   const { user, setUser } = useContext(UserContext);
+  const { usersLists, setUsersLists } = useState([]);
 
   useEffect(() => {
     const getAllPlaylists = async () => {
@@ -19,18 +20,19 @@ function Playlists() {
     };
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [usersLists]);
 
-  const handleDelete = (song) => {
-    axios.patch(
-      `http://localhost:3001/api/lists/removefrom/`,
-      {
-        songId: song.songId,
-      },
-      {
-        headers: { Authorization: `Bearer ${user.token}` },
-      }
+  const handleDelete = (playlist) => {
+    axios.delete(`http://localhost:3001/api/lists/${playlist.title}`, {
+      headers: { Authorization: `Bearer ${user.token}` },
+    });
+
+    const playlists = user.playLists.filter(
+      (list) => list.title !== playlist.title
     );
+
+    setUsersLists(playlists);
+
     //removes from DB, still needs to update list state and
   };
 
@@ -57,7 +59,10 @@ function Playlists() {
             >
               <p>
                 {playlist.title}
-                <DeleteIcon fontSize="small" onClick={handleDelete} />
+                <DeleteIcon
+                  fontSize="small"
+                  onClick={() => handleDelete(playlist)}
+                />
               </p>
             </div>
           );

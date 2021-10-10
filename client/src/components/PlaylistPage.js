@@ -83,7 +83,11 @@ function PlaylistPage() {
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon fontSize="large" onClick={() => handleDelete(song)} />
+            <DeleteIcon
+              className="delete"
+              fontSize="large"
+              onClick={() => handleDelete(song)}
+            />
           </div>
         ))}
       </div>
