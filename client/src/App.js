@@ -2,6 +2,7 @@ import LoginForm from "./components/LoginForm";
 import RegisterForm from "./components/RegisterForm";
 import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { useHistory } from "react-router";
 import Player from "./components/Player";
 import { UserContext } from "./contexts/UserContext";
 import Playlists from "./components/Playlists";
@@ -29,9 +30,22 @@ function App() {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
 
+  const history = useHistory();
+
+  const handleLogout = () => {
+    setUser({
+      username: "",
+      email: "",
+      token: "",
+      playLists: [],
+    });
+    history.push("/");
+  };
+
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <PlayerContext.Provider value={{ queue, setQueue }}>
+        {user.username && <button onClick={handleLogout}>Logout</button>}
         <Router>
           <Switch>
             <Route path="/" exact component={LoginForm} />
