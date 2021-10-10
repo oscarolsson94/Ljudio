@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { PlayerContext } from "../contexts/PlayerContext";
 import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
@@ -18,18 +18,6 @@ function PlaylistPage() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    const getAllPlaylists = async () => {
-      const result = await axios.get(
-        "http://localhost:3001/api/lists/single/" + title
-      );
-      setPlaylist(result.data.content);
-      setQueue({ ...queue, queueList: result.data.content });
-    };
-    getAllPlaylists();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const playPlaylist = () => {
     history.push("/song=" + playlist[0].songId);
   };
@@ -44,8 +32,8 @@ function PlaylistPage() {
     history.push("/playlists");
   };
 
-  const handleDelete = (song) => {
-    axios.patch(
+  const handleDelete = async (song) => {
+    await axios.patch(
       `http://localhost:3001/api/lists/removefrom/${title}`,
       {
         songId: song.songId,
@@ -54,9 +42,25 @@ function PlaylistPage() {
         headers: { Authorization: `Bearer ${user.token}` },
       }
     );
-    //removes from DB, still needs to update list state and
+    const newPlaylist = playlist.filter((tune) => tune.title !== song.title);
+    setPlaylist(newPlaylist);
+    setQueue({ ...queue, queueList: newPlaylist });
+    //Need to update queue state.
   };
 
+  useEffect(() => {
+    const getAllPlaylists = async () => {
+      const result = await axios.get(
+        "http://localhost:3001/api/lists/single/" + title
+      );
+      setPlaylist(result.data.content);
+      setQueue({ ...queue, queueList: result.data.content });
+    };
+    getAllPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div className="site">
       <div className="header">
@@ -71,19 +75,23 @@ function PlaylistPage() {
 
       <div className="listContent">
         {playlist?.map((song, index) => (
-          <div
-            className="songBody"
-            key={song._id}
-            onClick={() => {
-              playSong(song, index);
-            }}
-          >
-            <img src={song.coverPic} alt="album" />
+          <div className="songBody" key={song._id}>
+            <img
+              onClick={() => {
+                playSong(song, index);
+              }}
+              src={song.coverPic}
+              alt="album"
+            />
             <div className="textContent">
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon fontSize="large" onClick={() => handleDelete(song)} />
+            <DeleteIcon
+              className="delete"
+              fontSize="large"
+              onClick={() => handleDelete(song)}
+            />
           </div>
         ))}
       </div>

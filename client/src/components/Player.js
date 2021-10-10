@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
@@ -11,8 +12,9 @@ import AddBoxRoundedIcon from "@mui/icons-material/AddBoxRounded";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import HomeButton from "./HomeButton";
 import { UserContext } from "../contexts/UserContext";
-import { PlayerContext} from "../contexts/PlayerContext";
+import { PlayerContext } from "../contexts/PlayerContext";
 
 function Player() {
   let { videoId } = useParams();
@@ -31,11 +33,9 @@ function Player() {
   const [intervalId, setIntervalId] = useState(0);
   const [playing, setPlaying] = useState(false);
 
-
   //-----------------------OnMount-----------------------
 
   useEffect(() => {
-
     const setupPlayer = () => {
       let ytPlayer = new YTPlayer("#ytPlayer");
       ytPlayer.load(videoId);
@@ -49,8 +49,8 @@ function Player() {
         }, 1000);
         setIntervalId(newIntervalId);
         setPlaying(true);
-      })
-    }
+      });
+    };
     setupPlayer();
 
     const getData = async () => {
@@ -64,8 +64,6 @@ function Player() {
     };
     getData();
   }, [videoId]);
-
-  
 
   //Oscar
   useEffect(() => {
@@ -84,19 +82,19 @@ function Player() {
   //-----------------------cleanup-----------------------
 
   useEffect(() => {
-    return() => {
+    return () => {
       clearInterval(intervalId);
-    }
-  }, [intervalId])
+    };
+  }, [intervalId]);
 
   const cleanUp = () => {
     player.destroy();
     stopCount();
-    if(playing){
+    if (playing) {
       setPlaying(false);
     }
     setProgress(0);
-  }
+  };
 
   //-----------------------cleanup-----------------------
 
@@ -136,7 +134,6 @@ function Player() {
       setIntervalId(0);
       return;
     }
-    
   };
 
   const resetSong = () => {
@@ -167,34 +164,30 @@ function Player() {
   };
 
   const playNextSong = () => {
-
-    if(queue.queueIndex === queue.queueList.length - 1){
-      setQueue({...queue, queueIndex: 0})
+    if (queue.queueIndex === queue.queueList.length - 1) {
+      setQueue({ ...queue, queueIndex: 0 });
       history.push("/song=" + queue.queueList[0].songId);
-    }
-    else{
-      setQueue({...queue, queueIndex: ++queue.queueIndex})
+    } else {
+      setQueue({ ...queue, queueIndex: ++queue.queueIndex });
       history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
     cleanUp();
-
-  }
+  };
 
   const playPreviousSong = () => {
-
-    if(queue.queueIndex === 0){
-      setQueue({...queue, queueIndex: queue.queueList.length - 1})
-      history.push("/song=" + queue.queueList[queue.queueList.length - 1].songId);
-    }
-    else{
-      setQueue({...queue, queueIndex: --queue.queueIndex})
+    if (queue.queueIndex === 0) {
+      setQueue({ ...queue, queueIndex: queue.queueList.length - 1 });
+      history.push(
+        "/song=" + queue.queueList[queue.queueList.length - 1].songId
+      );
+    } else {
+      setQueue({ ...queue, queueIndex: --queue.queueIndex });
       history.push("/song=" + queue.queueList[queue.queueIndex].songId);
     }
     cleanUp();
-    
-  }
-  
+  };
 
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>
@@ -233,7 +226,13 @@ function Player() {
       <div>
         <div className="buttons">
           <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
-          {queue.queueList.length > 1 ? <SkipPreviousIcon onClick={playPreviousSong} color="action" fontSize="large" /> : null}
+          {queue.queueList.length > 1 ? (
+            <SkipPreviousIcon
+              onClick={playPreviousSong}
+              color="action"
+              fontSize="large"
+            />
+          ) : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
               color="action"
@@ -248,13 +247,22 @@ function Player() {
               onClick={playSong}
             />
           )}
-          {queue.queueList.length > 1 ? <SkipNextIcon onClick={playNextSong} color="action" fontSize="large" /> : null }
+          {queue.queueList.length > 1 ? (
+            <SkipNextIcon
+              onClick={playNextSong}
+              color="action"
+              fontSize="large"
+            />
+          ) : null}
           <AddBoxRoundedIcon
             color="action"
             onClick={() => setListOpen(true)}
             fontSize="large"
           />
         </div>
+      </div>
+      <div className="home">
+        <HomeButton></HomeButton>
       </div>
     </div>
   );
