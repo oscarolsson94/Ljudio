@@ -3,6 +3,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useHistory } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { FaSearch } from "react-icons/fa";
 
 function Playlists() {
   const history = useHistory();
@@ -68,6 +69,9 @@ function Playlists() {
           );
         })}
       </div>
+      <button>
+        <FaSearch size={30} onClick={() => history.push("/searchpage")} />
+      </button>
     </div>
   );
 }

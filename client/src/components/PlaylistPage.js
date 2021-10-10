@@ -42,8 +42,8 @@ function PlaylistPage() {
         headers: { Authorization: `Bearer ${user.token}` },
       }
     );
-    //removes from DB, still needs to update list state and
   };
+  //removes from DB, still needs to update list state and
 
   useEffect(() => {
     const getAllPlaylists = async () => {
@@ -55,7 +55,7 @@ function PlaylistPage() {
     };
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleDelete]);
+  }, []);
 
   return (
     <div className="site">
