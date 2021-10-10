@@ -23,8 +23,8 @@ function Playlists() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleDelete = (playlist) => {
-    axios.delete(`http://localhost:3001/api/lists/${playlist.title}`, {
+  const handleDelete = async (playlist) => {
+    await axios.delete(`http://localhost:3001/api/lists/${playlist.title}`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
 
