@@ -44,8 +44,8 @@ function PlaylistPage() {
     );
     const newPlaylist = playlist.filter((tune) => tune.title !== song.title);
     setPlaylist(newPlaylist);
+    //Need to update queue state.
   };
-  //removes from DB, still needs to update list state and
 
   useEffect(() => {
     const getAllPlaylists = async () => {

@@ -8,31 +8,31 @@ import { FaSearch } from "react-icons/fa";
 function Playlists() {
   const history = useHistory();
   const { user, setUser } = useContext(UserContext);
-  const { usersLists, setUsersLists } = useState([]);
+  const [usersLists, setUsersLists] = useState([]);
 
   useEffect(() => {
     const getAllPlaylists = async () => {
       const result = await axios.get(
         "http://localhost:3001/api/lists/" + user.username
       );
-      const playlists = result.data;
+      setUsersLists(result.data);
 
-      setUser({ ...user, playLists: playlists });
+      setUser({ ...user, playLists: result.data });
     };
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usersLists]);
+  }, []);
 
   const handleDelete = (playlist) => {
     axios.delete(`http://localhost:3001/api/lists/${playlist.title}`, {
       headers: { Authorization: `Bearer ${user.token}` },
     });
 
-    const playlists = user.playLists.filter(
+    const newPlaylists = usersLists.filter(
       (list) => list.title !== playlist.title
     );
 
-    setUsersLists(playlists);
+    setUsersLists(newPlaylists);
 
     //removes from DB, still needs to update list state and
   };
@@ -50,22 +50,21 @@ function Playlists() {
       </button>
 
       <div className="playlists">
-        {user.playLists.map((playlist) => {
+        {usersLists?.map((playlist) => {
           return (
-            <div
-              onClick={() => {
-                history.push("/playlist=" + playlist.title);
-              }}
-              key={playlist.title}
-            >
-              <p>
+            <div key={playlist.title}>
+              <p
+                onClick={() => {
+                  history.push("/playlist=" + playlist.title);
+                }}
+              >
                 {playlist.title}
-                <DeleteIcon
-                  className="delete"
-                  fontSize="small"
-                  onClick={() => handleDelete(playlist)}
-                />
               </p>
+              <DeleteIcon
+                className="delete"
+                fontSize="small"
+                onClick={() => handleDelete(playlist)}
+              />
             </div>
           );
         })}
