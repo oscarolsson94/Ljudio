@@ -1,0 +1,47 @@
+.form{
+    height: 380px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 100px;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 4px;
+    padding: 15px;
+}
+
+.form input{
+    background-color: lightgray;
+    height: 28px;
+    width: 250px;
+    border: none;
+    border-radius: 4px;
+}
+
+.form hr{
+  margin-top: 25px;
+  height: 2px;
+  width: 210px;
+  background-color: lightgray;
+  
+  border: none;
+}
+
+.form button{
+    background-color: #9DA7FF;
+    margin: 15px;
+    border-radius: 4px;
+    border: none;
+    width: 120px;
+    height: 40px
+}
+
+.form button:hover{
+    background-color: #c1c7ff;
+}
+
+.form button:active{
+    background-color: #8592ff;
+}
