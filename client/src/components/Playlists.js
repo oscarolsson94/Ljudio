@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
 import { useHistory } from "react-router";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Playlists() {
   const history = useHistory();
@@ -19,6 +20,19 @@ function Playlists() {
     getAllPlaylists();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const handleDelete = (song) => {
+    axios.patch(
+      `http://localhost:3001/api/lists/removefrom/`,
+      {
+        songId: song.songId,
+      },
+      {
+        headers: { Authorization: `Bearer ${user.token}` },
+      }
+    );
+    //removes from DB, still needs to update list state and
+  };
 
   return (
     <div>
@@ -41,7 +55,10 @@ function Playlists() {
               }}
               key={playlist.title}
             >
-              <p>{playlist.title}</p>
+              <p>
+                {playlist.title}
+                <DeleteIcon fontSize="small" onClick={handleDelete} />
+              </p>
             </div>
           );
         })}
