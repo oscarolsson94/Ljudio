@@ -18,18 +18,6 @@ function PlaylistPage() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    const getAllPlaylists = async () => {
-      const result = await axios.get(
-        "http://localhost:3001/api/lists/single/" + title
-      );
-      setPlaylist(result.data.content);
-      setQueue({ ...queue, queueList: result.data.content });
-    };
-    getAllPlaylists();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const playPlaylist = () => {
     history.push("/song=" + playlist[0].songId);
   };
@@ -57,6 +45,18 @@ function PlaylistPage() {
     //removes from DB, still needs to update list state and
   };
 
+  useEffect(() => {
+    const getAllPlaylists = async () => {
+      const result = await axios.get(
+        "http://localhost:3001/api/lists/single/" + title
+      );
+      setPlaylist(result.data.content);
+      setQueue({ ...queue, queueList: result.data.content });
+    };
+    getAllPlaylists();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [handleDelete]);
+
   return (
     <div className="site">
       <div className="header">
@@ -71,14 +71,14 @@ function PlaylistPage() {
 
       <div className="listContent">
         {playlist?.map((song, index) => (
-          <div
-            className="songBody"
-            key={song._id}
-            onClick={() => {
-              playSong(song, index);
-            }}
-          >
-            <img src={song.coverPic} alt="album" />
+          <div className="songBody" key={song._id}>
+            <img
+              onClick={() => {
+                playSong(song, index);
+              }}
+              src={song.coverPic}
+              alt="album"
+            />
             <div className="textContent">
               <p>{song.artist}</p>
               <p>{song.title}</p>
