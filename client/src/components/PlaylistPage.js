@@ -32,8 +32,8 @@ function PlaylistPage() {
     history.push("/playlists");
   };
 
-  const handleDelete = (song) => {
-    axios.patch(
+  const handleDelete = async (song) => {
+    await axios.patch(
       `http://localhost:3001/api/lists/removefrom/${title}`,
       {
         songId: song.songId,
@@ -42,6 +42,8 @@ function PlaylistPage() {
         headers: { Authorization: `Bearer ${user.token}` },
       }
     );
+    const newPlaylist = playlist.filter((tune) => tune.title !== song.title);
+    setPlaylist(newPlaylist);
   };
   //removes from DB, still needs to update list state and
 
