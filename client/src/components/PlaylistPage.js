@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router";
+import { Redirect, useParams } from "react-router";
 import { PlayerContext } from "../contexts/PlayerContext";
 import PlayCircleFilledOutlinedIcon from "@mui/icons-material/PlayCircleFilledOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
@@ -60,6 +60,7 @@ function PlaylistPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div className="site">
       <div className="header">

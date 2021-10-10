@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { Redirect } from "react-router";
 import YTPlayer from "yt-player";
 import "../styling/PlayerStyle.css";
 import Drawer from "@material-ui/core/Drawer";
@@ -186,6 +187,7 @@ function Player() {
     cleanUp();
   };
 
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div className="body">
       <Drawer anchor="right" open={listOpen} onClose={() => setListOpen(false)}>

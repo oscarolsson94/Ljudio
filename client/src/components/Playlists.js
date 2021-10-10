@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { FaSearch } from "react-icons/fa";
 
@@ -37,6 +37,7 @@ function Playlists() {
     //removes from DB, still needs to update list state and
   };
 
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div>
       <p>My Playlists</p>
