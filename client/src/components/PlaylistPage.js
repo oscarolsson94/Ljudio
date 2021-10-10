@@ -44,6 +44,7 @@ function PlaylistPage() {
     );
     const newPlaylist = playlist.filter((tune) => tune.title !== song.title);
     setPlaylist(newPlaylist);
+    setQueue({ ...queue, queueList: newPlaylist });
     //Need to update queue state.
   };
 
