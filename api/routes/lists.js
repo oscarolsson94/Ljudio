@@ -38,7 +38,7 @@ router.post("/", verify, async (req, res) => {
 //DELETE
 router.delete("/:id", verify, async (req, res) => {
   try {
-    await List.findByIdAndDelete(req.params.id);
+    await List.deleteOne({ title: req.params.id });
     res.status(204).json("The list has been deleted...");
   } catch (err) {
     res.status(500).json(err);

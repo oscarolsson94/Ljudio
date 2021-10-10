@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import axios from "axios";
 import { UserContext } from "../contexts/UserContext";
-import { useHistory } from "react-router";
+import { Redirect, useHistory } from "react-router";
 function NewPlaylist() {
   const [title, setTitle] = useState("");
   const { user } = useContext(UserContext);
@@ -25,6 +25,7 @@ function NewPlaylist() {
       });
   };
 
+  if (!user.token) return <Redirect to="/" />;
   return (
     <div>
       <p>Create a new Playlist</p>

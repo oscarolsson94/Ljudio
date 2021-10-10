@@ -9,12 +9,12 @@ import NewPlaylist from "./components/NewPlaylist";
 import PlaylistPage from "./components/PlaylistPage";
 import SearchPage from "./components/SearchPage";
 import { PlayerContext } from "./contexts/PlayerContext";
+import LogoutButton from "./components/LogoutButton";
 
 function App() {
-  
   const [queue, setQueue] = useState({
     queueList: [],
-    queueIndex: 0
+    queueIndex: 0,
   });
 
   const [user, setUser] = useState(
@@ -32,19 +32,20 @@ function App() {
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-    <PlayerContext.Provider value={{queue, setQueue}}>
-      <Router>
-        <Switch>
-          <Route path="/" exact component={LoginForm} />
-          <Route path="/register" component={RegisterForm} />
-          <Route path="/song=:videoId" component={Player} />
-          <Route path="/searchpage" component={SearchPage} />
-          <Route path="/playlists" component={Playlists} />
-          <Route path="/newPlaylist" component={NewPlaylist} />
-          <Route path="/playlist=:title" component={PlaylistPage} />
-        </Switch>
-      </Router>
-    </PlayerContext.Provider>
+      <PlayerContext.Provider value={{ queue, setQueue }}>
+        {user.username && <LogoutButton />}
+        <Router>
+          <Switch>
+            <Route path="/" exact component={LoginForm} />
+            <Route path="/register" component={RegisterForm} />
+            <Route path="/song=:videoId" component={Player} />
+            <Route path="/searchpage" component={SearchPage} />
+            <Route path="/playlists" component={Playlists} />
+            <Route path="/newPlaylist" component={NewPlaylist} />
+            <Route path="/playlist=:title" component={PlaylistPage} />
+          </Switch>
+        </Router>
+      </PlayerContext.Provider>
     </UserContext.Provider>
   );
 }
