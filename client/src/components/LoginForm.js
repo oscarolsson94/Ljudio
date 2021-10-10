@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
 import { useHistory, Redirect } from "react-router-dom";
-import { UserContext } from "../UserContext";
+import { UserContext } from "../contexts/UserContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -24,11 +24,11 @@ function LoginForm() {
         email: response.data.email,
         token: response.data.accessToken,
       });
-      history.push("/playlists");
+      history.push("/searchpage");
     });
   };
 
-  if (user.token) return <Redirect to="/playlists" />;
+  if (user.token) return <Redirect to="/searchpage" />;
   return (
     <form className="form">
       <p>Email</p>

@@ -4,6 +4,16 @@ import verify from "../verifyToken.js";
 
 const router = express.Router();
 
+//GET ONE LIST BY TITLE
+router.get("/single/:id", async (req, res) => {
+  try {
+    const userList = await List.findOne({ title: req.params.id });
+    res.send(userList);
+  } catch (error) {
+    res.status(404).json(err);
+  }
+});
+
 //GET ALL LISTS BY USERNAME - id = username
 router.get("/:id", async (req, res) => {
   try {
@@ -28,20 +38,20 @@ router.post("/", verify, async (req, res) => {
 //DELETE
 router.delete("/:id", verify, async (req, res) => {
   try {
-    await List.findByIdAndDelete(req.params.id);
+    await List.deleteOne({ title: req.params.id });
     res.status(204).json("The list has been deleted...");
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//ADD SONG TO LIST id = listTitle - send PATCH request with body{songURL}
+//ADD SONG TO LIST id = listTitle - send PATCH request with body{title, songId, artist, coverPic }
 router.patch("/addto/:id", verify, async (req, res) => {
   try {
     await List.updateOne(
       { title: req.params.id },
       {
-        content: [...content, req.body.songURL],
+        $push: { content: req.body },
       }
     );
     res.status(201).json("The song has been added to the list");
@@ -50,13 +60,13 @@ router.patch("/addto/:id", verify, async (req, res) => {
   }
 });
 
-//REMOVE SONG FROM LIST id = listTitle - send PATCH request with body{songURL}
+//REMOVE SONG FROM LIST id = title - send PATCH request with body{songId}
 router.patch("/removefrom/:id", verify, async (req, res) => {
   try {
     await List.updateOne(
       { title: req.params.id },
       {
-        content: content.filter((song) => song !== req.body.songURL),
+        $pull: { content: { songId: req.body.songId } },
       }
     );
     res.status(204).json("The song has been removed from the list");
