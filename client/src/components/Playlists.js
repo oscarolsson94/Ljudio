@@ -61,6 +61,7 @@ function Playlists() {
               <p>
                 {playlist.title}
                 <DeleteIcon
+                  className="delete"
                   fontSize="small"
                   onClick={() => handleDelete(playlist)}
                 />
