@@ -1,18 +1,22 @@
-import React, { useContext } from "react";
-import { UserContext } from "../contexts/UserContext";
+import React, { useContext } from 'react'
+import { UserContext } from '../contexts/UserContext'
 
 const LogoutButton = () => {
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext)
 
   const handleLogout = () => {
     setUser({
-      username: "",
-      email: "",
-      token: "",
+      username: '',
+      email: '',
+      token: '',
       playLists: [],
-    });
-  };
-  return <button onClick={handleLogout}>Logout</button>;
-};
+    })
+  }
+  return (
+    <button className="logout" onClick={handleLogout}>
+      Logout
+    </button>
+  )
+}
 
-export default LogoutButton;
+export default LogoutButton

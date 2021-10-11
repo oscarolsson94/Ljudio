@@ -31,23 +31,31 @@ function NewPlaylist() {
   return (
     <div>
       <p className="title">Skapa en ny Spellista</p>
+      <hr className="hr-horizontal" />
       <ArrowBackIosIcon
-        className="button-back"
+        className="button-back-new"
         sx={{ fontSize: 35 }}
         onClick={() => {
           history.push('/playlists')
         }}
       ></ArrowBackIosIcon>
-      <hr/>
-      <form onSubmit={createPlayList}>
-      <div className="form">
-        <input type="text" className="input"
-         placeholder="Namn på ny Spellista"
-        onChange={(e) => setTitle(e.target.value)}></input>
 
-        <button type="submit" className="button-add" value="Name of the playlist">
-        Lägg till Spellista
-        </button>
+      <form onSubmit={createPlayList}>
+        <div className="form">
+          <input
+            type="text"
+            className="input"
+            placeholder="Namn på ny Spellista"
+            onChange={(e) => setTitle(e.target.value)}
+          ></input>
+
+          <button
+            type="submit"
+            className="button-add"
+            value="Name of the playlist"
+          >
+            Lägg till Spellista
+          </button>
         </div>
       </form>
     </div>
