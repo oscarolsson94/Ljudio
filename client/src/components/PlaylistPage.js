@@ -79,17 +79,19 @@ function PlaylistPage() {
             <img
               src={song.coverPic}
               alt="album"
-              onClick={() => {playSong(song, index)}}
             />
             <div className="textContent">
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon
-              className="delete"
-              fontSize="large"
-              onClick={() => handleDelete(song)}
-            />
+            <div className="buttons">
+              <PlayCircleFilledOutlinedIcon style={{height: 60, width: 60}} fontSize="large" onClick={() => {playSong(song, index)}}/>
+              <DeleteIcon style={{height: 60, width: 60}}
+                className="delete"
+                fontSize="large"
+                onClick={() => handleDelete(song)}
+              />
+            </div>
           </div>
         ))}
       </div>
