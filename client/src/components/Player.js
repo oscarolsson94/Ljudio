@@ -35,6 +35,7 @@ function Player() {
 
   //-----------------------OnMount-----------------------
 
+  //Setup the player
   useEffect(() => {
     const setupPlayer = () => {
       let ytPlayer = new YTPlayer("#ytPlayer");
@@ -52,7 +53,7 @@ function Player() {
       });
     };
     setupPlayer();
-
+    //Get the data of the current song such as the artists name etc.
     const getData = async () => {
       const response = await fetch(
         "https://yt-music-api.herokuapp.com/api/yt/song/" + videoId
@@ -113,27 +114,12 @@ function Player() {
     );
     setListOpen(false);
   };
-  //
-
+  
+  //Functions related to changing the player such as playing the next song etc.
   const changeVideoProgress = async (event, newValue) => {
     pauseSong();
     setProgress(newValue);
     player.seek(progress);
-  };
-
-  const startCount = () => {
-    const newIntervalId = setInterval(() => {
-      setProgress(player.getCurrentTime());
-    }, 1000);
-    setIntervalId(newIntervalId);
-  };
-
-  const stopCount = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(0);
-      return;
-    }
   };
 
   const resetSong = () => {
@@ -155,12 +141,22 @@ function Player() {
     stopCount();
     setPlaying(false);
   };
+  //___________________________________________
 
-  const styles = {
-    playbutton: {
-      height: 60,
-      width: 60,
-    },
+  //Functions related to the timer that the progress bar is dependant on
+  const startCount = () => {
+    const newIntervalId = setInterval(() => {
+      setProgress(player.getCurrentTime());
+    }, 1000);
+    setIntervalId(newIntervalId);
+  };
+
+  const stopCount = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(0);
+      return;
+    }
   };
 
   const playNextSong = () => {
@@ -186,6 +182,16 @@ function Player() {
     }
     cleanUp();
   };
+  //___________________________________________
+
+  const styles = {
+    playbutton: {
+      height: 60,
+      width: 60,
+    },
+  };
+
+  
 
   if (!user.token) return <Redirect to="/" />;
   return (
