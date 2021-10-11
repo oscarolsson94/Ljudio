@@ -85,8 +85,10 @@ function PlaylistPage() {
               <p>{song.title}</p>
             </div>
             <div className="buttons">
-              <PlayCircleFilledOutlinedIcon style={{height: 60, width: 60}} fontSize="large" onClick={() => {playSong(song, index)}}/>
-              <DeleteIcon style={{height: 60, width: 60}}
+              <PlayCircleFilledOutlinedIcon color="action" style={{height: 60, width: 60}} fontSize="large" onClick={() => {playSong(song, index)}}/>
+              <DeleteIcon 
+                style={{height: 60, width: 60}}
+                color="action"
                 className="delete"
                 fontSize="large"
                 onClick={() => handleDelete(song)}
