@@ -51,6 +51,25 @@ function Player() {
         setIntervalId(newIntervalId);
         setPlaying(true);
       });
+
+      ytPlayer.on("ended", () => {
+        //play the next song in the queue when the song has ended.
+        if(queue.queueList.length > 1){
+            ytPlayer.destroy();
+            setProgress(0);
+          if (queue.queueIndex === queue.queueList.length - 1) {
+            setQueue({ ...queue, queueIndex: 0 });
+            history.push("/song=" + queue.queueList[0].songId);
+          } else {
+            setQueue({ ...queue, queueIndex: ++queue.queueIndex });
+            history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+          }
+
+        }
+        else{
+          ytPlayer.play();
+        }
+      })
     };
     setupPlayer();
     //Get the data of the current song such as the artists name etc.
@@ -64,6 +83,7 @@ function Player() {
       setAlbumCover(result.thumbnails[1].url);
     };
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
 
   //Oscar
