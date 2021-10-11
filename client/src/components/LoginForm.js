@@ -30,7 +30,7 @@ function LoginForm() {
 
   if (user.token) return <Redirect to="/searchpage" />;
   return (
-    <form className="form">
+    <form className="loginForm">
       <p>Email</p>
       <input
         type="email"
