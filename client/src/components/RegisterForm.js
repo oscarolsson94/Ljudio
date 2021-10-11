@@ -23,7 +23,7 @@ function RegisterForm() {
 
   return (
     <div>
-      <form className="form">
+      <form className="loginForm">
         <p>Email</p>
         <input
           type="email"
