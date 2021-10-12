@@ -1,0 +1,43 @@
+.playlist {
+  padding: 10px;
+  
+}
+
+.top-page {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-around;
+ 
+}
+.playlist-container {
+  border-radius: 4px;
+  padding: 10px;
+}
+.button-search {
+  font-size: 25px;
+  cursor: pointer;
+  color: rgb(184, 181, 181);
+}
+.button {
+  cursor: pointer;
+  color: rgb(184, 181, 181);
+  border: none;
+}
+.container-single-list {
+  background-color: rgb(197, 197, 197);
+  padding: 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  text-align: left;
+  margin: 25px 0;
+  width: 100%;
+  color: #444;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.delete-icon {
+  position: absolute;
+  right: 0;
+}

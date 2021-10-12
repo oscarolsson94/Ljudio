@@ -12,7 +12,7 @@ const LogoutButton = () => {
       playLists: [],
     });
   };
-  return <button onClick={handleLogout}>Logout</button>;
+  return <button className="logout" onClick={handleLogout}>Logout</button>;
 };
 
 export default LogoutButton;
