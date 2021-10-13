@@ -31,7 +31,7 @@ function RegisterForm() {
           onChange={(e) => setEmail(e.target.value)}
         ></input>
 
-        <p>Användarnamn</p>
+        <p>Username</p>
         <input
           type="text"
           required
