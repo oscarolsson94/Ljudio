@@ -30,7 +30,7 @@ function NewPlaylist() {
   if (!user.token) return <Redirect to="/" />
   return (
     <div>
-      <p className="title">Skapa en ny Spellista</p>
+      <p className="title">Create a new Playlist</p>
       <ArrowBackIosIcon
         className="button-back"
         sx={{ fontSize: 35 }}
@@ -38,11 +38,11 @@ function NewPlaylist() {
           history.push('/playlists')
         }}
       ></ArrowBackIosIcon>
-      <hr/>
+      
       <form onSubmit={createPlayList}>
       <div className="form">
         <input type="text" className="input"
-         placeholder="Namn på ny Spellista"
+         placeholder="Name of new playlist"
         onChange={(e) => setTitle(e.target.value)}></input>
 
         <button type="submit" className="button-add" value="Name of the playlist">
