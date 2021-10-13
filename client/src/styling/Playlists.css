@@ -28,7 +28,6 @@
   background-color: rgb(197, 197, 197);
   padding: 20px;
   border-radius: 4px;
-  cursor: pointer;
   display: flex;
   text-align: left;
   margin: 25px 0;
@@ -37,7 +36,12 @@
   font-size: 20px;
   margin-bottom: 10px;
 }
+
+.container-single-list p{
+  cursor: pointer;
+}
 .delete-icon {
+  cursor: pointer;
   position: absolute;
   right: 0;
 }
