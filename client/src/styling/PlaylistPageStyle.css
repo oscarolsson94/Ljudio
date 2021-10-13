@@ -34,6 +34,10 @@
   align-items: center;
 }
 
+.play{
+  cursor: pointer;
+}
+
 .delete {
   z-index: 999;
   cursor: pointer;
