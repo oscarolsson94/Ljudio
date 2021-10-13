@@ -46,6 +46,7 @@
 }
 .logout {
   background-color: #9da7ff;
+  cursor: pointer;
   margin: 15px;
   border-radius: 4px;
   border: none;

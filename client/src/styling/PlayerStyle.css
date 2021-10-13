@@ -18,6 +18,10 @@
   display: flex;
   align-items: center;
 }
+
+.playerbutton{
+  cursor: pointer;
+}
 .container-playlists {
   background-color: rgb(197, 197, 197);
   padding: 20px;

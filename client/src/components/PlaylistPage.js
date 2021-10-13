@@ -76,18 +76,23 @@ function PlaylistPage() {
       <div className="listContent">
         {playlist?.map((song, index) => (
           <div className="songBody" key={song._id}>
-            <img
-              src={song.coverPic}
-              alt="album"
-            />
+            <img src={song.coverPic} alt="album" />
             <div className="textContent">
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
             <div className="songButtons">
-              <PlayCircleFilledOutlinedIcon className="play" color="action" style={{height: 60, width: 60}} fontSize="large" onClick={() => {playSong(song, index)}}/>
-              <DeleteIcon 
-                style={{height: 60, width: 60}}
+              <PlayCircleFilledOutlinedIcon
+                className="play"
+                color="action"
+                style={{ height: 60, width: 60 }}
+                fontSize="large"
+                onClick={() => {
+                  playSong(song, index);
+                }}
+              />
+              <DeleteIcon
+                style={{ height: 60, width: 60 }}
                 color="action"
                 className="delete"
                 fontSize="large"
