@@ -3,17 +3,16 @@ import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import Axios from "axios";
 import "../styling/FormStyle.css";
-import { useHistory, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { user, setUser } = useContext(UserContext);
-  const history = useHistory();
 
   const login = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     Axios.post("http://localhost:3001/api/auth/login", {
       email: email,
       password: password,
@@ -24,13 +23,12 @@ function LoginForm() {
         email: response.data.email,
         token: response.data.accessToken,
       });
-      history.push("/searchpage");
     });
   };
 
   if (user.token) return <Redirect to="/searchpage" />;
   return (
-    <form className="loginForm">
+    <form className="loginForm" onSubmit={login}>
       <p>Email</p>
       <input
         type="email"
@@ -47,7 +45,7 @@ function LoginForm() {
 
       <hr />
 
-      <button type="submit" onClick={login}>
+      <button type="submit">
         Log in
       </button>
 

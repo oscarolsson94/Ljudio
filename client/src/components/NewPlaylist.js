@@ -46,7 +46,7 @@ function NewPlaylist() {
         onChange={(e) => setTitle(e.target.value)}></input>
 
         <button type="submit" className="button-add" value="Name of the playlist">
-        Lägg till Spellista
+        Add playlist
         </button>
         </div>
       </form>

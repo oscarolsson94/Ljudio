@@ -23,7 +23,7 @@ function RegisterForm() {
 
   return (
     <div>
-      <form className="loginForm">
+      <form className="loginForm" onSubmit={createAccount}>
         <p>Email</p>
         <input
           type="email"
@@ -47,7 +47,7 @@ function RegisterForm() {
 
         <hr />
 
-        <button type="submit" onClick={createAccount}>
+        <button type="submit">
           Register
         </button>
 
