@@ -53,7 +53,7 @@ function SearchPage() {
           <input
             className="input"
             type="text"
-            placeholder="Sök på låt eller artist"
+            placeholder="Search for a song or artist"
             onChange={(e) => setInput(e.target.value)}
           ></input>
 
