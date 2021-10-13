@@ -220,9 +220,10 @@ function Player() {
         {/* loop over the users playlists */}
         {user.playLists ? (
           <>
-            <h2>What playlist would you like to add {songName} to?</h2>
+            <h2 className="title-add-playlist" >What playlist would you like to add {songName} to?</h2>
             {user.playLists.map((list) => (
               <div
+              className="container-playlists"
                 key={list._id}
                 value={list.title}
                 onClick={() => handleAddToList(list.title)}
