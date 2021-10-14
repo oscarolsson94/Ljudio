@@ -18,6 +18,14 @@ function PlaylistPage() {
 
   const history = useHistory();
 
+  function hiddenElemOrPlayList(){
+    if (playlist.length === 0){
+    document.getElementById ("play-circle-button").style.visibility = "hidden";
+    }else{
+      playPlaylist()
+    }
+  }
+
   const playPlaylist = () => {
     history.push("/song=" + playlist[0].songId);
   };
@@ -69,7 +77,7 @@ function PlaylistPage() {
         <PlayCircleFilledOutlinedIcon
           color="action"
           fontSize="large"
-          onClick={playPlaylist}
+          onClick={hiddenElemOrPlayList}
         />
       </div>
 
