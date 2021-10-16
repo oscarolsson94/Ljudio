@@ -18,6 +18,14 @@ function PlaylistPage() {
 
   const history = useHistory();
 
+  function hiddenElemOrPlayList(){
+    if (playlist.length === 0){
+    document.getElementById ("play-circle-button").style.visibility = "hidden";
+    }else{
+      playPlaylist()
+    }
+  }
+
   const playPlaylist = () => {
     history.push("/song=" + playlist[0].songId);
   };
@@ -69,26 +77,36 @@ function PlaylistPage() {
         <PlayCircleFilledOutlinedIcon
           color="action"
           fontSize="large"
-          onClick={playPlaylist}
+          onClick={hiddenElemOrPlayList}
         />
       </div>
 
       <div className="listContent">
         {playlist?.map((song, index) => (
-          <div className="songBody" key={song._id} onClick={() => {playSong(song, index)}}>
-            <img
-              src={song.coverPic}
-              alt="album"
-            />
+          <div className="songBody" key={song._id}>
+            <img src={song.coverPic} alt="album" />
             <div className="textContent">
               <p>{song.artist}</p>
               <p>{song.title}</p>
             </div>
-            <DeleteIcon
-              className="delete"
-              fontSize="large"
-              onClick={() => handleDelete(song)}
-            />
+            <div className="songButtons">
+              <PlayCircleFilledOutlinedIcon
+                className="play"
+                color="action"
+                style={{ height: 60, width: 60 }}
+                fontSize="large"
+                onClick={() => {
+                  playSong(song, index);
+                }}
+              />
+              <DeleteIcon
+                style={{ height: 60, width: 60 }}
+                color="action"
+                className="delete"
+                fontSize="large"
+                onClick={() => handleDelete(song)}
+              />
+            </div>
           </div>
         ))}
       </div>

@@ -23,7 +23,7 @@ function RegisterForm() {
 
   return (
     <div>
-      <form className="form">
+      <form className="loginForm" onSubmit={createAccount}>
         <p>Email</p>
         <input
           type="email"
@@ -31,7 +31,7 @@ function RegisterForm() {
           onChange={(e) => setEmail(e.target.value)}
         ></input>
 
-        <p>Användarnamn</p>
+        <p>Username</p>
         <input
           type="text"
           required
@@ -47,7 +47,7 @@ function RegisterForm() {
 
         <hr />
 
-        <button type="submit" onClick={createAccount}>
+        <button type="submit">
           Register
         </button>
 

@@ -1,12 +1,14 @@
 .container-search-page {
     max-width: 500px;
-    margin: 30 auto;
-    overflow: auto;
-    min-height: auto;
-    border-radius: 10px;
-    margin-left: auto;
-    margin-right: auto;
-    background-color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 100px;
+    border-radius: 4px;
+    padding: 15px;
+    
 }
 .title{ 
     text-align: center;

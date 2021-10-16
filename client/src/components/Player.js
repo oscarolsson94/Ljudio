@@ -35,6 +35,7 @@ function Player() {
 
   //-----------------------OnMount-----------------------
 
+  //Setup the player
   useEffect(() => {
     const setupPlayer = () => {
       let ytPlayer = new YTPlayer("#ytPlayer");
@@ -50,9 +51,26 @@ function Player() {
         setIntervalId(newIntervalId);
         setPlaying(true);
       });
+
+      ytPlayer.on("ended", () => {
+        //play the next song in the queue when the song has ended.
+        if (queue.queueList.length > 1) {
+          ytPlayer.destroy();
+          setProgress(0);
+          if (queue.queueIndex === queue.queueList.length - 1) {
+            setQueue({ ...queue, queueIndex: 0 });
+            history.push("/song=" + queue.queueList[0].songId);
+          } else {
+            setQueue({ ...queue, queueIndex: ++queue.queueIndex });
+            history.push("/song=" + queue.queueList[queue.queueIndex].songId);
+          }
+        } else {
+          ytPlayer.play();
+        }
+      });
     };
     setupPlayer();
-
+    //Get the data of the current song such as the artists name etc.
     const getData = async () => {
       const response = await fetch(
         "https://yt-music-api.herokuapp.com/api/yt/song/" + videoId
@@ -63,6 +81,7 @@ function Player() {
       setAlbumCover(result.thumbnails[1].url);
     };
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [videoId]);
 
   //Oscar
@@ -113,27 +132,12 @@ function Player() {
     );
     setListOpen(false);
   };
-  //
 
+  //Functions related to changing the player such as playing the next song etc.
   const changeVideoProgress = async (event, newValue) => {
     pauseSong();
     setProgress(newValue);
     player.seek(progress);
-  };
-
-  const startCount = () => {
-    const newIntervalId = setInterval(() => {
-      setProgress(player.getCurrentTime());
-    }, 1000);
-    setIntervalId(newIntervalId);
-  };
-
-  const stopCount = () => {
-    if (intervalId) {
-      clearInterval(intervalId);
-      setIntervalId(0);
-      return;
-    }
   };
 
   const resetSong = () => {
@@ -155,12 +159,22 @@ function Player() {
     stopCount();
     setPlaying(false);
   };
+  //___________________________________________
 
-  const styles = {
-    playbutton: {
-      height: 60,
-      width: 60,
-    },
+  //Functions related to the timer that the progress bar is dependant on
+  const startCount = () => {
+    const newIntervalId = setInterval(() => {
+      setProgress(player.getCurrentTime());
+    }, 1000);
+    setIntervalId(newIntervalId);
+  };
+
+  const stopCount = () => {
+    if (intervalId) {
+      clearInterval(intervalId);
+      setIntervalId(0);
+      return;
+    }
   };
 
   const playNextSong = () => {
@@ -186,6 +200,14 @@ function Player() {
     }
     cleanUp();
   };
+  //___________________________________________
+
+  const styles = {
+    playbutton: {
+      height: 60,
+      width: 60,
+    },
+  };
 
   if (!user.token) return <Redirect to="/" />;
   return (
@@ -194,9 +216,12 @@ function Player() {
         {/* loop over the users playlists */}
         {user.playLists ? (
           <>
-            <h2>What playlist would you like to add {songName} to?</h2>
+            <h2 className="title-add-playlist">
+              What playlist would you like to add {songName} to?
+            </h2>
             {user.playLists.map((list) => (
               <div
+                className="container-playlists"
                 key={list._id}
                 value={list.title}
                 onClick={() => handleAddToList(list.title)}
@@ -225,9 +250,15 @@ function Player() {
       />
       <div>
         <div className="buttons">
-          <RestartAltIcon fontSize="large" onClick={resetSong} color="action" />
+          <RestartAltIcon
+            className="playerbutton"
+            fontSize="large"
+            onClick={resetSong}
+            color="action"
+          />
           {queue.queueList.length > 1 ? (
             <SkipPreviousIcon
+              className="playerbutton"
               onClick={playPreviousSong}
               color="action"
               fontSize="large"
@@ -235,12 +266,14 @@ function Player() {
           ) : null}
           {playing ? (
             <PauseCircleFilledOutlinedIcon
+              className="playerbutton"
               color="action"
               style={styles.playbutton}
               onClick={pauseSong}
             />
           ) : (
             <PlayCircleFilledOutlinedIcon
+              className="playerbutton"
               color="action"
               style={styles.playbutton}
               fontSize="large"
@@ -249,12 +282,14 @@ function Player() {
           )}
           {queue.queueList.length > 1 ? (
             <SkipNextIcon
+              className="playerbutton"
               onClick={playNextSong}
               color="action"
               fontSize="large"
             />
           ) : null}
           <AddBoxRoundedIcon
+            className="playerbutton"
             color="action"
             onClick={() => setListOpen(true)}
             fontSize="large"

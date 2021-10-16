@@ -29,6 +29,15 @@
   margin: 0 auto;
 }
 
+.songButtons{
+  display: flex;
+  align-items: center;
+}
+
+.play{
+  cursor: pointer;
+}
+
 .delete {
   z-index: 999;
   cursor: pointer;
